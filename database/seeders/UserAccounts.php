@@ -22,7 +22,7 @@ class UserAccounts extends Seeder
             'name' => $faker->name(),
             'email' => 'admin@sample.com',
             'password' => Hash::make('12345'),
-            'role' => 'admin',
+            // 'role' => 'admin',
         ]);
 
         // seeding editor
@@ -30,7 +30,7 @@ class UserAccounts extends Seeder
             'name' => $faker->name(),
             'email' => 'editor@sample.com',
             'password' => Hash::make('12345'),
-            'role' => 'editor',
+            // 'role' => 'editor',
         ]);
 
         // seeding user
@@ -38,7 +38,7 @@ class UserAccounts extends Seeder
             'name' => $faker->name(),
             'email' => 'user@sample.com',
             'password' => Hash::make('12345'),
-            'role' => 'user',
+            // 'role' => 'user',
         ]);
     }
 }
