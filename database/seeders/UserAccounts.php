@@ -21,6 +21,7 @@ class UserAccounts extends Seeder
         $admin = User::create([
             'name' => $faker->name(),
             'email' => 'admin@sample.com',
+            'email_verified_at' => '2024-02-02 12:42:50',
             'password' => Hash::make('12345'),
             'role' => 'admin',
         ]);
@@ -29,6 +30,7 @@ class UserAccounts extends Seeder
         $editor = User::create([
             'name' => $faker->name(),
             'email' => 'user@sample.com',
+            'email_verified_at' => '2024-02-02 12:42:50',
             'password' => Hash::make('12345'),
             'role' => 'consumer',
         ]);
