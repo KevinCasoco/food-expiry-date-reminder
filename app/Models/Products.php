@@ -14,6 +14,7 @@ class Products extends Model
         'categories',
         'expiration_date',
         'quantity',
+        'qr_code_image',
     ];
 
 }

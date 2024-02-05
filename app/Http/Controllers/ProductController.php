@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -28,6 +28,38 @@ class ProductController extends Controller
         return view('add-products');
     }
 
+    public function product_list()
+    {
+        return view('product-information', compact('product', 'qr_code'));
+    }
+
+    // without saving the qr code image to public folder
+    // public function create_products(Request $request)
+    // {
+    //     // Validate the request
+    //     $request->validate([
+    //         'product_name' => 'required|string',
+    //         'categories' => 'required|string',
+    //         'quantity' => 'required',
+    //         'expiration_date' => 'required|string',
+    //     ]);
+
+    //     // Create the products before generate qr_code
+    //     $product = Products::create([
+    //         'product_name' => $request->input('product_name'),
+    //         'categories' => $request->input('categories'),
+    //         'quantity' => $request->input('quantity'),
+    //         'expiration_date' => $request->input('expiration_date'),
+    //     ]);
+
+    //     // Generate QR code based on product information
+    //     $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
+    //     $qr_code = QrCode::generate($qr_code_string);
+
+    //     return view('qr-code')->with('qr_code', $qr_code);
+    // }
+
+    // public qrcode folder path
     public function create_products(Request $request)
     {
         // Validate the request
@@ -38,7 +70,7 @@ class ProductController extends Controller
             'expiration_date' => 'required|string',
         ]);
 
-        // Create the products before generate qr_code
+        // Create the products before generating the qr_code
         $product = Products::create([
             'product_name' => $request->input('product_name'),
             'categories' => $request->input('categories'),
@@ -49,6 +81,13 @@ class ProductController extends Controller
         // Generate QR code based on product information
         $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
         $qr_code = QrCode::generate($qr_code_string);
+
+        // Save the QR code image to storage
+        $imagePath = 'qrcodes/' . $product->product_name . '_qr_code.png';
+        file_put_contents(public_path($imagePath), base64_decode($qr_code));
+
+        // Update the product with the image path
+        $product->update(['qr_code_image' => $imagePath]);
 
         return view('qr-code')->with('qr_code', $qr_code);
     }

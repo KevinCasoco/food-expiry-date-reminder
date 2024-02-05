@@ -40,4 +40,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/products', [ProductController::class, 'createForm'])->name('createForm.add-products');
 Route::post('/products/create_products', [ProductController::class, 'create_products'])->name('products.create_products');
 
+Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('product_list.list-of-products');
+
 require __DIR__.'/auth.php';

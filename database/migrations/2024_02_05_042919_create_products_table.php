@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('categories')->nullable();
             $table->decimal('quantity')->nullable();
             $table->date('expiration_date')->nullable();
+            $table->string('qr_code_image')->nullable();
             $table->timestamps();
         });
     }
