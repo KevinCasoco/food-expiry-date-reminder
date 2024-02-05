@@ -19,12 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// qr code generate string format
-Route::get('qr-code', function () {
-    $string = 'kevs 404';
-    $qr_code = QrCode::generate($string);
-    return view('qr-code')->with('qr_code',$qr_code);
-});
+// // qr code generate string format
+// Route::get('qr-code', function () {
+//     $string = 'kevs 404';
+//     $qr_code = QrCode::generate($string);
+//     return view('qr-code')->with('qr_code',$qr_code);
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
