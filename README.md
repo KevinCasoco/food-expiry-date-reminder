@@ -50,6 +50,7 @@ how to run this project:
 
         php artisan make:controller SampleController    // to create new controller in terminal
         php artisan make:model ModelName                // to create a new model in terminal
+        php artisan make:migration create_products_table // to create migration in terminal
 
         php artisan optimize:clear
         php artisan route:clear
