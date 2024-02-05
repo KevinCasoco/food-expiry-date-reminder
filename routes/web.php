@@ -37,10 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Assuming you have a ProductController
-Route::post('/create-products', [ProductController::class, 'create_products'])->name('create-products');
-
-// Route to display product creation confirmation and QR code
-Route::get('/product-created/{product}', [ProductController::class, 'product-information'])->name('product-information');
+Route::get('/products', [ProductController::class, 'createForm'])->name('createForm.add-products');
+Route::post('/products/create_products', [ProductController::class, 'create_products'])->name('products.create_products');
 
 require __DIR__.'/auth.php';

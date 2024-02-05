@@ -23,6 +23,11 @@ class ProductController extends Controller
         return view('qr-code')->with('qr_code', $qr_code);
     }
 
+    public function createForm()
+    {
+        return view('add-products');
+    }
+
     public function create_products(Request $request)
     {
         // Validate the request
