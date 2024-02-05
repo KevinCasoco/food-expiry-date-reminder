@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -35,5 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Assuming you have a ProductController
+Route::post('/create-products', [ProductController::class, 'create_products'])->name('create-products');
+
+// Route to display product creation confirmation and QR code
+Route::get('/product-created/{product}', [ProductController::class, 'product-information'])->name('product-information');
 
 require __DIR__.'/auth.php';

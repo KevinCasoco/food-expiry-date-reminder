@@ -46,6 +46,14 @@ class ProductController extends Controller
         $qr_code = QrCode::generate($qr_code_string);
 
         return view('qr-code')->with('qr_code', $qr_code);
+    }
 
+    public function showProductCreated(Products $product)
+    {
+        // Generate QR code based on product information
+        $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
+        $qr_code = QrCode::generate($qr_code_string);
+
+        return view('product-information', compact('product', 'qr_code'));
     }
 }
