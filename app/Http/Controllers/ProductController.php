@@ -79,7 +79,16 @@ class ProductController extends Controller
         ]);
 
         // Generate QR code based on product information
-        $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
+        // without spacing
+        // $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
+
+        // with spacing new line
+        $qr_code_string =
+            $product->product_name . PHP_EOL .
+            $product->categories . PHP_EOL .
+            $product->quantity . PHP_EOL .
+            $product->expiration_date;
+
         $qr_code = QrCode::generate($qr_code_string);
 
         // Save the QR code image to storage
