@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -19,12 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// qr code generate string format
-Route::get('qr-code', function () {
-    $string = 'kevs 404';
-    $qr_code = QrCode::generate($string);
-    return view('qr-code')->with('qr_code',$qr_code);
-});
+// // qr code generate string format
+// Route::get('qr-code', function () {
+//     $string = 'kevs 404';
+//     $qr_code = QrCode::generate($string);
+//     return view('qr-code')->with('qr_code',$qr_code);
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -35,5 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/products', [ProductController::class, 'createForm'])->name('createForm.add-products');
+Route::post('/products/create_products', [ProductController::class, 'create_products'])->name('products.create_products');
+
+Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('product_list.list-of-products');
 
 require __DIR__.'/auth.php';
