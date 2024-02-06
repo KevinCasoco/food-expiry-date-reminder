@@ -30,7 +30,9 @@ class ProductController extends Controller
 
     public function product_list()
     {
-        return view('product-information', compact('product', 'qr_code'));
+        $data = Products::all();
+
+        return view('product-information', compact('data'));
     }
 
     // without saving the qr code image to public folder
