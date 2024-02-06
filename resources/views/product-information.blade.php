@@ -70,11 +70,18 @@
                         </tbody>
                     </table>
 
-                    {{-- data for pagination xx
-                    {{ $data->links() }} --}}
+                    {{-- data for pagination xx --}}
+                    {{ $data->links() }}
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            $(document).ready( function () {
+                $('#example').DataTable();
+                "paging": false // Disable DataTables pagination
+            });
+        </script>
     </div>
     @endif
 </x-app-layout>
