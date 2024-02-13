@@ -37,6 +37,16 @@ class ProductController extends Controller
         return view('user.product-information', compact('data'));
     }
 
+    public function consumed_products()
+    {
+        return view('user.consumed-products');
+    }
+
+    public function expired_products()
+    {
+        return view('user.expired-products');
+    }
+
     // without saving the qr code image to public folder
     // public function create_products(Request $request)
     // {
