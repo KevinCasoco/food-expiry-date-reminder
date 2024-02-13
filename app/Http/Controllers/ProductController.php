@@ -34,7 +34,7 @@ class ProductController extends Controller
 
         $data = Products::paginate(10); // Paginate with 10 items per page
 
-        return view('product-information', compact('data'));
+        return view('user.product-information', compact('data'));
     }
 
     // without saving the qr code image to public folder

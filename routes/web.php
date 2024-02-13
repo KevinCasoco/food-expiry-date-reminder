@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrCodeScannerController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -106,10 +107,13 @@ Route::middleware('auth', 'verified')->group(function () {
 Route::get('/products', [ProductController::class, 'createForm'])->name('user.add-products');
 Route::post('/products/create_products', [ProductController::class, 'create_products'])->name('user.create_products');
 
-Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('user.list-of-products');
+Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('user.product-information');
 
 // qr code scanner
 Route::get('/qr-code-scanner', [QrCodeScannerController::class, 'qr_code_scanner'])->name('user.qr-code-scanner');
+
+// user list
+Route::get('/user-list', [UserController::class, 'user_list'])->name('user.user-list');
 
 }); // end of middleware group
 
