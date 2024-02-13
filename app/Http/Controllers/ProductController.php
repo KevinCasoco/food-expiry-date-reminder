@@ -30,7 +30,9 @@ class ProductController extends Controller
 
     public function product_list()
     {
-        $data = Products::all();
+        // $data = Products::all();
+
+        $data = Products::paginate(10); // Paginate with 10 items per page
 
         return view('product-information', compact('data'));
     }
