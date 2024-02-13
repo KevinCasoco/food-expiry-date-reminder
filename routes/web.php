@@ -103,13 +103,13 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
 // User Dashboard Sidebar
 Route::middleware('auth', 'verified')->group(function () {
 
-Route::get('/products', [ProductController::class, 'createForm'])->name('createForm.add-products');
-Route::post('/products/create_products', [ProductController::class, 'create_products'])->name('products.create_products');
+Route::get('/products', [ProductController::class, 'createForm'])->name('user.add-products');
+Route::post('/products/create_products', [ProductController::class, 'create_products'])->name('user.create_products');
 
-Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('product_list.list-of-products');
+Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('user.list-of-products');
 
 // qr code scanner
-Route::get('/qr-code-scanner', [QrCodeScannerController::class, 'qr_code_scanner'])->name('qr-code-scanner');
+Route::get('/qr-code-scanner', [QrCodeScannerController::class, 'qr_code_scanner'])->name('user.qr-code-scanner');
 
 }); // end of middleware group
 
