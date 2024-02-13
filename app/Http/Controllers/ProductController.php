@@ -25,7 +25,7 @@ class ProductController extends Controller
 
     public function createForm()
     {
-        return view('add-products');
+        return view('user.add-products');
     }
 
     public function product_list()

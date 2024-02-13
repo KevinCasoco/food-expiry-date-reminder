@@ -11,7 +11,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h2>Create Product</h2>
-                    <form method="post" action="{{ route('products.create_products') }}">
+                    <form method="post" action="{{ route('user.create_products') }}">
                         @csrf
                         <div class="form-group">
                             <label for="product_name">Product Name:</label>
