@@ -123,6 +123,10 @@ Route::get('/consumed-products', [ProductController::class, 'consumed_products']
 // expired products
 Route::get('/expired-products', [ProductController::class, 'expired_products'])->name('user.expired-products');
 
+// calendar of products
+Route::get('/calendar', [ProductController::class, 'calendar'])->name('user.calendar');
+
+
 }); // end of middleware group
 
 require __DIR__.'/auth.php';
