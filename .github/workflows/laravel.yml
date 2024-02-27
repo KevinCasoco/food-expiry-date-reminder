@@ -27,4 +27,4 @@ jobs:
      - name: Create Database
       run: |
         mkdir -p database
-        touch database/database.mysql
+        touch database/database.sql
