@@ -40,7 +40,7 @@
                             <span class="text-sm">Add New Products</span>
                         </a>
                     </li>
-                    <li class="mb-1 group">
+                    <li class="mb-1 group active">
                         <a href="{{ route('user.calendar') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-calendar-2-fill mr-3 text-lg"></i>
@@ -54,7 +54,7 @@
                             <span class="text-sm">QR Code Scanner</span>
                         </a>
                     </li>
-                    <li class="mb-1 group active">
+                    <li class="mb-1 group">
                         <a href="{{ route('user.product-information') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-calendar-2-fill mr-3 text-lg"></i>
@@ -128,82 +128,228 @@
                 </div>
             </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <table id="example" class="stripe hover display dataTable " style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
-                        <thead>
-                            <tr>
-                                <th data-priority="1">ID</th>
-                                <th data-priority="2">Product Name</th>
-                                <th data-priority="3">Categories</th>
-                                <th data-priority="4">Quantity</th>
-                                <th data-priority="5">Expiration Date</th>
-                                <th data-priority="6">QR CODE</th>
-                                {{-- <th data-priority="6">Edit</th>
-                                <th data-priority="7">Delete</th>
-                                <th data-priority="8">Status</th> --}}
-                            </tr>
-                        </thead>
 
-                        <tbody>
+             <!-- content -->
+        <div class="flex-grow text-gray-800">
+            <main class="p-6 sm:p-1 space-y-6">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-                            @foreach($data as $products)
-                            {{-- <tr x-on:click="itemToEdit = {{ $item->id }};"> --}}
-                            <tr>
-                                <td >{{ $products->id }}</td>
-                                <td >{{ $products->product_name }}</td>
-                                <td >{{ $products->categories }}</td>
-                                <td >{{ $products->quantity }}</td>
-                                <td >{{ $products->expiration_date }}</td>
-                                <td ><img src="{{ asset($products->qr_code_image) }}" alt="QR Code"></td>
-                                {{-- <td class="text-center ">
-                                    <button @click="adminEdit = true; itemToEdit = $event.target.getAttribute('data-item-id')"
-                                    data-item-id="{{ $item->id }}" class="py-1 px-4 rounded bg-sky-500 hover:bg-sky-700 text-white"> <i class="ri-edit-box-fill mr-1"></i>Edit
-                                    </button>
-                                </td>
-                                <td class="text-center ">
-                                    <button @click="adminDelete = true; itemToDelete = $event.target.getAttribute('data-item-id')"
-                                    data-item-id="{{ $item->id }}" class="py-1 px-4 rounded bg-red-500 hover:bg-red-700 text-white"> <i class="ri-delete-bin-5-fill mr-1"></i>Delete
-                                    </button>
-                                </td> --}}
-                                {{-- <td class="text-center ">
-                                    <form action="{{ route('admin.toggleUserStatus', $item->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit"
-                                        class='py-1 px-4 rounded
-                                        @if ($item->status == 'active')
-                                            bg-green-500 hover:bg-green-700 text-white
-                                        @else
-                                            bg-red-500 hover:bg-red-700 text-white
-                                        @endif'>
-                                        @if ($item->status == 'active')
-                                            Active
-                                        @else
-                                            Inactive
-                                        @endif
-                                    </button>
-                                    </form>
-                                </td> --}}
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+        <div class="container mt-5">
+            {{-- For Search --}}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="input-group mb-2">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search Schedule">
+                        <div class="input-group-append">
+                            <button id="searchButton" class="btn btn-primary">Search Products</button>
+                        </div>
+                    </div>
+                </div>
 
-                    {{-- data for pagination xx --}}
-                    {{ $data->links() }}
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div id="calendar" style="width: 100%;height:100vh"></div>
                 </div>
             </div>
         </div>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
         <script type="text/javascript">
-            $(document).ready( function () {
-                $('#example').DataTable();
-                "paging": false // Disable DataTables pagination
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var calendarEl = document.getElementById('calendar');
+            var events = [];
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                initialView: 'dayGridMonth',
+                timeZone: 'UTC',
+                events: '/events',
+                editable: true,
+
+                // Deleting The Event
+                eventContent: function(info) {
+                    var address = info.event.extendedProps.location; // Assuming the address is stored within the location property
+                    var secondPart = address.split(',')[1].trim();
+                    console.log(secondPart);
+
+                    var eventTitle = secondPart; // You can use this part of the address as the event title, if needed
+                    var eventElement = document.createElement('div');
+                    eventElement.innerHTML = '<span style="cursor: pointer;">❌</span> ' + eventTitle;
+
+                    eventElement.querySelector('span').addEventListener('click', function() {
+                        // Trigger Bootstrap modal for confirmation
+                        $('#deleteEventModal').modal('show');
+                        // Handle deletion when confirmed
+                        $('#confirmDeleteEvent').on('click', function() {
+                            var eventId = info.event.id;
+                            $.ajax({
+                                method: 'DELETE',
+                                url: '/schedule/' + eventId,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(response) {
+                                    console.log('Event deleted successfully.');
+                                    calendar.refetchEvents(); // Refresh events after deletion
+                                    $('#deleteEventModal').modal('hide'); // Hide modal after deletion
+                                },
+                                error: function(error) {
+                                    console.error('Error deleting event:', error);
+                                    $('#deleteEventModal').modal('hide'); // Hide modal if deletion fails
+                                }
+                            });
+                        });
+                    });
+
+                    return {
+                        domNodes: [eventElement]
+                    };
+                },
+
+                // Drag And Drop
+
+                eventDrop: function(info) {
+                    var eventId = info.event.id;
+                    var newStartDate = info.event.start;
+                    var newEndDate = info.event.end || newStartDate;
+                    var newStartDateUTC = newStartDate.toISOString().slice(0, 10);
+                    var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
+
+                    $.ajax({
+                        method: 'PUT',
+                        url: `/schedule/${eventId}`,
+                        data: {
+                            start_date: newStartDateUTC,
+                            end_date: newEndDateUTC,
+                        },
+                        success: function() {
+                            console.log('Event moved successfully.');
+                        },
+                        error: function(error) {
+                            console.error('Error moving event:', error);
+                        }
+                    });
+                },
+
+                // Event Resizing
+                eventResize: function(info) {
+                    var eventId = info.event.id;
+                    var newEndDate = info.event.end;
+                    var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
+
+                    $.ajax({
+                        method: 'PUT',
+                        url: `/schedule/${eventId}/resize`,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            end_date: newEndDateUTC
+                        },
+                        success: function() {
+                            console.log('Event resized successfully.');
+                        },
+                        error: function(error) {
+                            console.error('Error resizing event:', error);
+                        }
+                    });
+                },
+            });
+
+            calendar.render();
+
+            document.getElementById('searchButton').addEventListener('click', function() {
+                var searchKeywords = document.getElementById('searchInput').value.toLowerCase();
+                filterAndDisplayEvents(searchKeywords);
+            });
+
+
+            function filterAndDisplayEvents(searchKeywords) {
+                $.ajax({
+                    method: 'GET',
+                    url: `/events/search?location=${searchKeywords}`,
+                    success: function(response) {
+                        calendar.removeAllEvents();
+                        calendar.addEventSource(response);
+                    },
+                    error: function(error) {
+                        console.error('Error searching events:', error);
+                    }
+                });
+            }
+
+
+                // export excel file
+                document.getElementById('exportButton').addEventListener('click', function() {
+                    var events = calendar.getEvents().map(function(event) {
+                        return {
+                            id: event.id,
+                            location: event.extendedProps.location,
+                            start: event.start ? formatDate(event.start) : null,
+                            time: event.extendedProps.time,
+                        };
+                    });
+
+                    var wb = XLSX.utils.book_new();
+
+                    var ws = XLSX.utils.json_to_sheet(events , { origin: 'A2' });
+
+                    // Add a title header at the top with styling
+                    var titleHeader = [['Waste Collection Schedule']];
+                    XLSX.utils.sheet_add_aoa(ws, titleHeader, {
+                        origin: { r: 0, c: 0 },
+                        style: { font: { bold: true, size: 16 } } // Example styling - adjust as needed
+                    });
+
+                    XLSX.utils.book_append_sheet(wb, ws, 'Waste Collection Schedule');
+
+                    var arrayBuffer = XLSX.write(wb, {
+                        bookType: 'xlsx',
+                        type: 'array'
+                    });
+
+                    var blob = new Blob([arrayBuffer], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+
+                    var downloadLink = document.createElement('a');
+                    downloadLink.href = URL.createObjectURL(blob);
+                    downloadLink.download = 'waste-collection-schedule.xlsx';
+                    downloadLink.click();
+                });
+
+                function formatDate(date) {
+                    // Extract only the date part from the ISO string
+                    return date ? date.toISOString().split('T')[0] : null;
+                }
+        </script>
+
+        <script>
+            // grab everything we need
+            const btn = document.querySelector(".mobile-menu-button");
+            const sidebar = document.querySelector(".sidebar");
+            let isSidebarOpen = false;
+
+            // add our event listener for the click
+            btn.addEventListener("click", () => {
+            sidebar.classList.toggle("-translate-x-full");
             });
         </script>
-    </div>
-    @endif
-</x-app-layout>
+        </main>
+
+        @endif
+    </x-app-layout>
+

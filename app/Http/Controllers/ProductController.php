@@ -51,6 +51,15 @@ class ProductController extends Controller
         return view('user.expired-products', compact('data'));
     }
 
+    public function calendar()
+    {
+        // $data = Products::all();
+
+        // $data = Products::paginate(10); // Paginate with 10 items per page
+
+        return view('user.calendar');
+    }
+
     // without saving the qr code image to public folder
     // public function create_products(Request $request)
     // {
