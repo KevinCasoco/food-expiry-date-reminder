@@ -27,9 +27,9 @@ jobs:
     - name: Create Database
       run: |
         mkdir -p database
-        touch database/food-expiry-date-reminder.sql
+        touch database/food-expiry-date-reminder.mysql
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: mysql
-        DB_DATABASE: database/food-expiry-date-reminder.sql
+        DB_DATABASE: food-expiry-date-reminder
       run: vendor/bin/phpunit
