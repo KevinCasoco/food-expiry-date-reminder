@@ -39,7 +39,9 @@ class ProductController extends Controller
 
     public function consumed_products()
     {
-        return view('user.consumed-products');
+        $data = Products::paginate(10); // Paginate with 10 items per page
+
+        return view('user.consumed-products', compact('data'));
     }
 
     public function expired_products()
