@@ -1,4 +1,3 @@
-User
 name: Laravel
 
 on:
@@ -10,7 +9,7 @@ on:
 jobs:
   laravel-tests:
 
-    runs-on: windows
+    runs-on: ubuntu-latest
 
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
