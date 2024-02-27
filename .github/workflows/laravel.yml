@@ -26,7 +26,8 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
       run: |
-        mysql -e 'CREATE DATABASE IF NOT EXISTS `food-expiry-date-reminder`;'
+        mkdir -p database
+        touch database/food-expiry-date-reminder.mysql
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: mysql
