@@ -101,31 +101,30 @@ Route::middleware('auth', 'status')->group(function () {
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout')->middleware('auth');
 
-// User Dashboard Sidebar
+// Consumer Dashboard Sidebar
 Route::middleware('auth', 'verified')->group(function () {
 
-// add new products
-Route::get('/products', [ProductController::class, 'createForm'])->name('user.add-products');
-Route::post('/products/create_products', [ProductController::class, 'create_products'])->name('user.create_products');
+    // add new products
+    Route::get('/products', [ProductController::class, 'createForm'])->name('user.add-products');
+    Route::post('/products/create_products', [ProductController::class, 'create_products'])->name('user.create_products');
 
-// product list
-Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('user.product-information');
+    // product list
+    Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('user.product-information');
 
-// qr code scanner
-Route::get('/qr-code-scanner', [QrCodeScannerController::class, 'qr_code_scanner'])->name('user.qr-code-scanner');
+    // qr code scanner
+    Route::get('/qr-code-scanner', [QrCodeScannerController::class, 'qr_code_scanner'])->name('user.qr-code-scanner');
 
-// user list
-Route::get('/user-list', [UserController::class, 'user_list'])->name('user.user-list');
+    // user list
+    Route::get('/user-list', [UserController::class, 'user_list'])->name('user.user-list');
 
-// consumed products
-Route::get('/consumed-products', [ProductController::class, 'consumed_products'])->name('user.consumed-products');
+    // consumed products
+    Route::get('/consumed-products', [ProductController::class, 'consumed_products'])->name('user.consumed-products');
 
-// expired products
-Route::get('/expired-products', [ProductController::class, 'expired_products'])->name('user.expired-products');
+    // expired products
+    Route::get('/expired-products', [ProductController::class, 'expired_products'])->name('user.expired-products');
 
-// calendar of products
-Route::get('/calendar', [ProductController::class, 'calendar'])->name('user.calendar');
-
+    // calendar of products
+    Route::get('/calendar', [ProductController::class, 'calendar'])->name('user.calendar');
 
 }); // end of middleware group
 
