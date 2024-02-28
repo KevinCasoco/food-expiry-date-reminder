@@ -23,9 +23,14 @@ class ProductController extends Controller
         return view('qr-code')->with('qr_code', $qr_code);
     }
 
-    public function createForm()
+    public function user_new_products()
     {
         return view('user.add-products');
+    }
+
+    public function admin_new_products()
+    {
+        return view('admin.admin-add-products');
     }
 
     public function product_list()
@@ -37,6 +42,15 @@ class ProductController extends Controller
         return view('user.product-information', compact('data'));
     }
 
+    public function admin_product_list()
+    {
+        // $data = Products::all();
+
+        $data = Products::paginate(10); // Paginate with 10 items per page
+
+        return view('admin.admin-product-information', compact('data'));
+    }
+
     public function consumed_products()
     {
         $data = Products::paginate(10); // Paginate with 10 items per page
@@ -44,11 +58,25 @@ class ProductController extends Controller
         return view('user.consumed-products', compact('data'));
     }
 
+    public function admin_consumed_products()
+    {
+        $data = Products::paginate(10); // Paginate with 10 items per page
+
+        return view('admin.admin-consumed-products', compact('data'));
+    }
+
     public function expired_products()
     {
         $data = Products::paginate(10); // Paginate with 10 items per page
 
         return view('user.expired-products', compact('data'));
+    }
+
+    public function admin_expired_products()
+    {
+        $data = Products::paginate(10); // Paginate with 10 items per page
+
+        return view('admin.admin-expired-products', compact('data'));
     }
 
     public function calendar()
@@ -59,6 +87,7 @@ class ProductController extends Controller
 
         return view('user.calendar');
     }
+
 
     // without saving the qr code image to public folder
     // public function create_products(Request $request)
@@ -127,6 +156,48 @@ class ProductController extends Controller
 
         return view('qr-code')->with('qr_code', $qr_code);
     }
+
+     // public qrcode folder path
+     public function admin_create_products(Request $request)
+     {
+         // Validate the request
+         $request->validate([
+             'product_name' => 'required|string',
+             'categories' => 'required|string',
+             'quantity' => 'required',
+             'expiration_date' => 'required|string',
+         ]);
+
+         // Create the products before generating the qr_code
+         $product = Products::create([
+             'product_name' => $request->input('product_name'),
+             'categories' => $request->input('categories'),
+             'quantity' => $request->input('quantity'),
+             'expiration_date' => $request->input('expiration_date'),
+         ]);
+
+         // Generate QR code based on product information
+         // without spacing
+         // $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
+
+         // with spacing new line
+         $qr_code_string =
+             $product->product_name . PHP_EOL .
+             $product->categories . PHP_EOL .
+             $product->quantity . PHP_EOL .
+             $product->expiration_date;
+
+         $qr_code = QrCode::generate($qr_code_string);
+
+         // Save the QR code image to storage
+         $imagePath = 'qrcodes/' . $product->product_name . '_qr_code.png';
+         file_put_contents(public_path($imagePath), base64_decode($qr_code));
+
+         // Update the product with the image path
+         $product->update(['qr_code_image' => $imagePath]);
+
+         return view('admin-qr-code')->with('qr_code', $qr_code);
+     }
 
     public function showProductCreated(Products $product)
     {

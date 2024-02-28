@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -101,11 +102,38 @@ Route::middleware('auth', 'status')->group(function () {
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout')->middleware('auth');
 
+// admin Dashboard Sidebar
+Route::middleware('auth', 'verified')->group(function () {
+
+    // add new products
+    Route::get('/admin-products', [ProductController::class, 'admin_new_products'])->name('admin.admin-add-products');
+    Route::post('/admin/create_products', [ProductController::class, 'admin_create_products'])->name('admin.admin_new_products');
+
+    // product list
+    Route::get('/admin-list-of-products', [ProductController::class, 'admin_product_list'])->name('admin.admin-product-information');
+
+    // // admin list
+    // Route::get('/admin-list', [AdminController::class, 'admin_list'])->name('admin.admin-list');
+
+    // user list
+    Route::get('/admin-user-list', [UserController::class, 'admin_user_list'])->name('admin.admin-user-list');
+
+    // consumed products
+    Route::get('/admin-consumed-products', [ProductController::class, 'admin_consumed_products'])->name('admin.admin-consumed-products');
+
+    // expired products
+    Route::get('/admin-expired-products', [ProductController::class, 'admin_expired_products'])->name('admin.admin-expired-products');
+
+    // // calendar of products
+    // Route::get('/admin-calendar', [ProductController::class, 'calendar'])->name('user.calendar');
+
+}); // end of middleware group
+
 // Consumer Dashboard Sidebar
 Route::middleware('auth', 'verified')->group(function () {
 
     // add new products
-    Route::get('/products', [ProductController::class, 'createForm'])->name('user.add-products');
+    Route::get('/products', [ProductController::class, 'user_new_products'])->name('user.add-products');
     Route::post('/products/create_products', [ProductController::class, 'create_products'])->name('user.create_products');
 
     // product list

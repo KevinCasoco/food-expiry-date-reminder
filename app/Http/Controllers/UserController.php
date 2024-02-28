@@ -10,4 +10,9 @@ class UserController extends Controller
     {
         return view('user.user-list');
     }
+
+    public function admin_user_list()
+    {
+        return view('admin.admin-user-list');
+    }
 }
