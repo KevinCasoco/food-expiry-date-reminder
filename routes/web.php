@@ -124,8 +124,8 @@ Route::middleware('auth', 'verified')->group(function () {
     // expired products
     Route::get('/admin-expired-products', [ProductController::class, 'admin_expired_products'])->name('admin.admin-expired-products');
 
-    // // calendar of products
-    // Route::get('/admin-calendar', [ProductController::class, 'calendar'])->name('user.calendar');
+    // calendar of products
+    Route::get('/admin-calendar', [ProductController::class, 'calendar'])->name('user.calendar');
 
 }); // end of middleware group
 
