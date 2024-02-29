@@ -28,9 +28,11 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::redirect('/', destination: 'login');
 
 // // qr code generate string format
 // Route::get('qr-code', function () {
