@@ -499,11 +499,108 @@
                                   </div>
                     </section>
 
-                     </div>
-                        </div>
+                    {{-- Chart --}}
+<section class="grid md:grid-cols-2 xl:grid-cols-4 xl:grid-rows-3 xl:grid-flow-col gap-6">
+    <div class="flex flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg">
+        <div class="p-4 flex-grow">
+            <div class="w-[100%] h-[100%] flex justify-center items-center">
+                <canvas id="myBarChart"></canvas>
+            </div>
 
-                    </section>
-                  </main>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+                const barchart = document.getElementById('myBarChart');
+
+                new Chart(barchart, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Admin (Active)', 'Admin (Inactive)', 'Collector (Active)', 'Collector (Inactive)', 'Residents (Active)', 'Residents (Inactive)'],
+                        datasets: [{
+                            label: 'Active and Inactive Users',
+                            data: [100, 50, 80, 30, 120, 70], // Static values here
+                            backgroundColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(173, 216, 230)',
+                                'rgb(255, 159, 64)',
+                                'rgb(255, 182, 193)',
+                                'rgb(255, 205, 86)',
+                                'rgb(255, 222, 173)'
+                            ],
+                            borderColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(173, 216, 230)',
+                                'rgb(255, 159, 64)',
+                                'rgb(255, 182, 193)',
+                                'rgb(255, 205, 86)',
+                                'rgb(255, 222, 173)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    boxWidth: 20,
+                                    usePointStyle: true
+                                }
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    <div class="flex items-center flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg">
+        <div class="w-[60%] px-6 py-5 font-semibold border-b border-gray-100">
+            <canvas id="myChart"></canvas>
+
+            <script>
+                const ctx = document.getElementById('myChart');
+
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Admin', 'Collector', 'Residents'],
+                        datasets: [{
+                            label: 'Number of Users',
+                            data: [50, 30, 70], // Static values here
+                            backgroundColor: [
+                                '#059BFF',
+                                '#FF4069',
+                                '#FF9020',
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                align: 'center',
+                                labels: {
+                                    boxWidth: 15,
+                                    padding: 10,
+                                    usePointStyle: true,
+                                },
+                                maxItems: 3
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+</section>
             </div>
 
           </div>
