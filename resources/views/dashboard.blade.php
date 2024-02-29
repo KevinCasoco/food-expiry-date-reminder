@@ -140,7 +140,7 @@
                           <div class="w-3/5 flex justify-start">
                               <ul>
                                   <li class="font-extrabold text-white">
-                                      Admin</li>
+                                      Users</li>
                                   {{-- <li class="font-extrabold text-white text-xl">{{ $countAdmins }}</li> --}}
                                   <li class="font-extrabold text-white text-xl">99</li>
                                   <i class="ri-admin-fill mr-3 text-lg text-white"></i>
@@ -155,10 +155,10 @@
                               <div class="w-3/5 flex justify-start">
                                   <ul>
                                       <li class="font-extrabold text-white">
-                                          Collector</li>
+                                          Products</li>
                                       {{-- <li class="font-extrabold text-white text-xl">{{ $countCollector }}</li> --}}
                                       <li class="font-extrabold text-white text-xl">99</li>
-                                      <i class="ri-map-pin-user-fill mr-3 text-lg text-white"></i>
+                                      <i class="ri-shopping-cart-fill mr-3 text-lg text-white"></i>
                                   </ul>
                               </div>
                           </div>
@@ -168,10 +168,10 @@
 
                                   <div class="w-3/5 flex justify-start">
                                       <ul>
-                                          <li class="font-bold text-white">Residents</li>
+                                          <li class="font-bold text-white">Consumed</li>
                                           {{-- <li class="font-extrabold text-white text-xl">{{ $countResidents }}</li> --}}
                                           <li class="font-extrabold text-white text-xl">99</li>
-                                          <i class="ri-user-fill mr-3 text-lg text-white"></i>
+                                          <i class="ri-calendar-2-fill text-lg text-white"></i>
                                       </ul>
                                   </div>
                               </div>
@@ -180,10 +180,10 @@
 
                                       <div class="w-3/5 flex justify-start">
                                           <ul>
-                                              <li class="font-bold text-white">Total Users</li>
+                                              <li class="font-bold text-white">Expired</li>
                                               {{-- <li class="font-extrabold text-white text-xl">{{ $totalUser }}</li> --}}
                                               <li class="font-extrabold text-white text-xl">99</li>
-                                              <i class="ri-user-fill mr-3 text-lg text-white"></i>
+                                              <i class="ri-pass-expired-fill mr-3 text-lg text-white"></i>
                                           </ul>
                                       </div>
                                   </div>
@@ -249,7 +249,7 @@
                     <li class="mb-1 group">
                         <a href="{{ route('user.add-products') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
-                            <i class="ri-calendar-2-fill mr-3 text-lg"></i>
+                            <i class="ri-file-add-fill mr-3 text-lg"></i>
                             <span class="text-sm">Add New Products</span>
                         </a>
                     </li>
@@ -270,7 +270,7 @@
                     <li class="mb-1 group">
                         <a href="{{ route('user.product-information') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
-                            <i class="ri-calendar-2-fill mr-3 text-lg"></i>
+                            <i class="ri-shopping-cart-fill mr-3 text-lg"></i>
                             <span class="text-sm">Product List</span>
                         </a>
                     </li>
@@ -284,7 +284,7 @@
                     <li class="mb-1 group">
                         <a href="{{ route('user.expired-products') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
-                            <i class="ri-calendar-2-fill mr-3 text-lg"></i>
+                            <i class="ri-pass-expired-fill mr-3 text-lg"></i>
                             <span class="text-sm">Expired Products</span>
                         </a>
                     </li>

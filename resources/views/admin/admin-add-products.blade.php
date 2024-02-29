@@ -26,17 +26,17 @@
                             <span class="text-sm">Dashboard</span>
                         </a>
                     </li>
-                    {{-- <li class="mb-1 group">
+                    <li class="mb-1 group">
                         <a href="{{ route('user.user-list') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-admin-fill mr-3 text-lg"></i>
                             <span class="text-sm">User List</span>
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="mb-1 group active">
                         <a href="{{ route('user.add-products') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
-                            <i class="ri-calendar-2-fill mr-3 text-lg"></i>
+                            <i class="ri-file-add-fill mr-3 text-lg"></i>
                             <span class="text-sm">Add New Products</span>
                         </a>
                     </li>
