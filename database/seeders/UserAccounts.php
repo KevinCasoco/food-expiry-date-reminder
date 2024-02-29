@@ -19,8 +19,8 @@ class UserAccounts extends Seeder
 
         // seeding admin
         $admin = User::create([
-            'name' => $faker->name(),
-            'email' => 'admin@sample.com',
+            'name' => 'Kevin Casoco',
+            'email' => 'andreikevincasoco@gmail.com',
             'email_verified_at' => '2024-02-02 12:42:50',
             'password' => Hash::make('12345'),
             'role' => 'admin',
@@ -28,8 +28,8 @@ class UserAccounts extends Seeder
 
         // seeding user
         $editor = User::create([
-            'name' => $faker->name(),
-            'email' => 'user@sample.com',
+            'name' => 'Kevin Casoco',
+            'email' => 'kevs404official@gmail.com',
             'email_verified_at' => '2024-02-02 12:42:50',
             'password' => Hash::make('12345'),
             'role' => 'consumer',
