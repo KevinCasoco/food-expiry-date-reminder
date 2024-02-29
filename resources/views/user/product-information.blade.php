@@ -144,7 +144,7 @@
                                 <th data-priority="3">Categories</th>
                                 <th data-priority="4">Quantity</th>
                                 <th data-priority="5">Expiration Date</th>
-                                {{-- <th data-priority="6">QR CODE</th> --}}
+                                <th data-priority="6">QR CODE</th>
                             </tr>
                         </thead>
 
@@ -157,7 +157,7 @@
                                 <td >{{ $products->categories }}</td>
                                 <td >{{ $products->quantity }}</td>
                                 <td >{{ $products->expiration_date }}</td>
-                                {{-- <td ><img src="{{ asset($products->qr_code_image) }}" alt="QR Code"></td> --}}
+                                <td ><img src="{{ asset($products->qr_code_image) }}" alt="QR Code"></td>
                             </tr>
                             @endforeach
                         </tbody>

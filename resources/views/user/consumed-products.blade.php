@@ -50,7 +50,7 @@
                     <li class="mb-1 group">
                         <a href="{{ route('user.qr-code-scanner') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
-                            <i class="ri-qr-scan-2-fill mr-3 text-lg"></i>
+                            <i class="ri-qr-scan-fill mr-3 text-lg"></i>
                             <span class="text-sm">QR Code Scanner</span>
                         </a>
                     </li>
@@ -128,10 +128,14 @@
                 </div>
             </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+     <!-- content -->
+ <div class="flex-grow text-gray-800">
+    <main class="p-3 sm:p-4 space-y-5">
+      <!-- Start Table -->
+<div id='recipients' class="p-4 m-1 lg:mt-0 rounded shadow-lg bg-white overflow-x-auto">
+    <div class="mb-4 flex sm:justify-center md:justify-start lg:justify-start">
+                <h2 class="text-2xl font-bold">CONSUMED PRODUCTS</h2>
+            </div>
                     <table id="example" class="stripe hover display dataTable " style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                         <thead>
                             <tr>
@@ -139,8 +143,8 @@
                                 <th data-priority="2">Product Name</th>
                                 <th data-priority="3">Categories</th>
                                 <th data-priority="4">Quantity</th>
-                                <th data-priority="5">Expiration Date</th>
-                                <th data-priority="6">QR CODE</th>
+                                <th data-priority="5">Date Consumed</th>
+                                {{-- <th data-priority="6">QR CODE</th> --}}
                                 {{-- <th data-priority="6">Edit</th>
                                 <th data-priority="7">Delete</th>
                                 <th data-priority="8">Status</th> --}}
@@ -157,36 +161,7 @@
                                 <td >{{ $products->categories }}</td>
                                 <td >{{ $products->quantity }}</td>
                                 <td >{{ $products->expiration_date }}</td>
-                                <td ><img src="{{ asset($products->qr_code_image) }}" alt="QR Code"></td>
-                                {{-- <td class="text-center ">
-                                    <button @click="adminEdit = true; itemToEdit = $event.target.getAttribute('data-item-id')"
-                                    data-item-id="{{ $item->id }}" class="py-1 px-4 rounded bg-sky-500 hover:bg-sky-700 text-white"> <i class="ri-edit-box-fill mr-1"></i>Edit
-                                    </button>
-                                </td>
-                                <td class="text-center ">
-                                    <button @click="adminDelete = true; itemToDelete = $event.target.getAttribute('data-item-id')"
-                                    data-item-id="{{ $item->id }}" class="py-1 px-4 rounded bg-red-500 hover:bg-red-700 text-white"> <i class="ri-delete-bin-5-fill mr-1"></i>Delete
-                                    </button>
-                                </td> --}}
-                                {{-- <td class="text-center ">
-                                    <form action="{{ route('admin.toggleUserStatus', $item->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit"
-                                        class='py-1 px-4 rounded
-                                        @if ($item->status == 'active')
-                                            bg-green-500 hover:bg-green-700 text-white
-                                        @else
-                                            bg-red-500 hover:bg-red-700 text-white
-                                        @endif'>
-                                        @if ($item->status == 'active')
-                                            Active
-                                        @else
-                                            Inactive
-                                        @endif
-                                    </button>
-                                    </form>
-                                </td> --}}
+                                {{-- <td ><img src="{{ asset($products->qr_code_image) }}" alt="QR Code"></td> --}}
                             </tr>
                             @endforeach
                         </tbody>
@@ -198,12 +173,72 @@
             </div>
         </div>
 
-        <script type="text/javascript">
-            $(document).ready( function () {
-                $('#example').DataTable();
-                "paging": false // Disable DataTables pagination
+        <script>
+            $(document).ready(function() {
+                var empDataTable = $('#example').DataTable({
+                    responsive: true,
+                    dom: 'Blfrtip',
+                    buttons: [
+                        {
+                            extend: 'copy',
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Waste Disposal Tracking System PDF Report',
+                            customize: function(doc) {
+                                // Add custom design to PDF header
+                                doc.content.splice(0, 1, {
+                                    text: 'Waste Disposal Tracking System PDF Report',
+                                    style: {
+                                        alignment: 'center',
+                                        color: 'red', // Change color as needed
+                                        fontSize: 16 // Adjust font size as needed
+                                    }
+                                });
+                                 // Set page size and orientation
+                                doc.pageSize = 'A4'; // You can change to 'letter' or other sizes
+                                doc.pageOrientation = 'portrait'; // 'portrait' or 'landscape'
+                            },
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 7] // Specify the column indices you want to export
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            title: 'Waste Disposal Tracking System CSV Report',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 7] // Specify the column indices you want to export
+                            },
+                            customize: function (csv) {
+                                // Custom CSV header with a single cell spanning all columns
+                                var customHeader = 'Waste Disposal Tracking System Report\n';
+                                return customHeader + csv;
+                            },
+                        },
+                        {
+                            extend: 'excel',
+                            title: 'Waste Disposal Tracking System Excel Report',
+                            customize: function(xlsx) {
+                                // // Add custom design to Excel header
+                                // var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                // $('row:first c', sheet).attr('s', '32'). // Change the style as needed
+                            },
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 7] // Specify the column indices you want to export
+                            }
+                        },
+                        {
+                            extend: 'print', // Add print button
+                            title: 'Waste Disposal Tracking System Print Report',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 7]
+                            }
+                        }
+                    ]
+                });
             });
         </script>
+
     </div>
     @endif
 </x-app-layout>
