@@ -240,14 +240,14 @@
                         </a>
                     </li>
                     <li class="mb-1 group">
-                        <a href="{{ route('user.user-list') }}"
+                        <a href="{{ route('admin.admin-user-list') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-admin-fill mr-3 text-lg"></i>
                             <span class="text-sm">User List</span>
                         </a>
                     </li>
                     <li class="mb-1 group">
-                        <a href="{{ route('user.add-products') }}"
+                        <a href="{{ route('admin.admin-add-products') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-file-add-fill mr-3 text-lg"></i>
                             <span class="text-sm">Add New Products</span>
@@ -268,21 +268,21 @@
                         </a>
                     </li> --}}
                     <li class="mb-1 group">
-                        <a href="{{ route('user.product-information') }}"
+                        <a href="{{ route('admin.admin-product-information') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-shopping-cart-fill mr-3 text-lg"></i>
                             <span class="text-sm">Product List</span>
                         </a>
                     </li>
                     <li class="mb-1 group">
-                        <a href="{{ route('user.consumed-products') }}"
+                        <a href="{{ route('admin.admin-consumed-products') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-calendar-2-fill mr-3 text-lg"></i>
                             <span class="text-sm">Consumed Products</span>
                         </a>
                     </li>
                     <li class="mb-1 group">
-                        <a href="{{ route('user.expired-products') }}"
+                        <a href="{{ route('admin.admin-expired-products') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-pass-expired-fill mr-3 text-lg"></i>
                             <span class="text-sm">Expired Products</span>
