@@ -112,8 +112,8 @@ Route::middleware('auth', 'verified')->group(function () {
     // product list
     Route::get('/admin-list-of-products', [ProductController::class, 'admin_product_list'])->name('admin.admin-product-information');
 
-    // // admin list
-    // Route::get('/admin-list', [AdminController::class, 'admin_list'])->name('admin.admin-list');
+    // admin list
+    Route::get('/admin-list', [AdminController::class, 'admin_list'])->name('admin.admin-list');
 
     // user list
     Route::get('/admin-user-list', [UserController::class, 'admin_user_list'])->name('admin.admin-user-list');
