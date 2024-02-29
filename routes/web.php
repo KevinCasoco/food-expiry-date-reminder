@@ -112,8 +112,8 @@ Route::middleware('auth', 'verified')->group(function () {
     // product list
     Route::get('/admin-list-of-products', [ProductController::class, 'admin_product_list'])->name('admin.admin-product-information');
 
-    // admin list
-    Route::get('/admin-list', [AdminController::class, 'admin_list'])->name('admin.admin-list');
+    // // admin list
+    // Route::get('/admin-list', [AdminController::class, 'admin_list'])->name('admin.admin-list');
 
     // user list
     Route::get('/admin-user-list', [UserController::class, 'admin_user_list'])->name('admin.admin-user-list');
@@ -124,8 +124,8 @@ Route::middleware('auth', 'verified')->group(function () {
     // expired products
     Route::get('/admin-expired-products', [ProductController::class, 'admin_expired_products'])->name('admin.admin-expired-products');
 
-    // calendar of products
-    Route::get('/admin-calendar', [ProductController::class, 'calendar'])->name('user.calendar');
+    // // calendar of products
+    // Route::get('/admin-calendar', [ProductController::class, 'calendar'])->name('user.calendar');
 
 }); // end of middleware group
 
