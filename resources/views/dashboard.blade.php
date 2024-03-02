@@ -205,17 +205,17 @@
                 new Chart(barchart, {
                     type: 'bar',
                     data: {
-                        labels: ['Admin (Active)', 'Admin (Inactive)', 'Collector (Active)', 'Collector (Inactive)', 'Residents (Active)', 'Residents (Inactive)'],
+                        labels: ['Hotdog', 'Ham', 'Bread', 'Fruits', 'Meat'],
                         datasets: [{
-                            label: 'Active and Inactive Users',
+                            label: 'Products',
                             data: [100, 50, 80, 30, 120, 70], // Static values here
                             backgroundColor: [
                                 'rgb(255, 99, 132)',
-                                'rgb(173, 216, 230)',
-                                'rgb(255, 159, 64)',
-                                'rgb(255, 182, 193)',
-                                'rgb(255, 205, 86)',
-                                'rgb(255, 222, 173)'
+                                // 'rgb(173, 216, 230)',
+                                // 'rgb(255, 159, 64)',
+                                // 'rgb(255, 182, 193)',
+                                // 'rgb(255, 205, 86)',
+                                // 'rgb(255, 222, 173)'
                             ],
                             borderColor: [
                                 'rgb(255, 99, 132)',
@@ -259,14 +259,14 @@
                 new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Admin', 'Collector', 'Residents'],
+                        labels: ['Admin', 'Consumer'],
                         datasets: [{
                             label: 'Number of Users',
                             data: [50, 30, 70], // Static values here
                             backgroundColor: [
                                 '#059BFF',
                                 '#FF4069',
-                                '#FF9020',
+                                // '#FF9020',
                             ],
                             borderWidth: 1
                         }]
@@ -465,7 +465,7 @@
                               <div class="w-3/5 flex justify-start">
                                   <ul>
                                       <li class="font-extrabold text-white">
-                                          Collector</li>
+                                          Consumer</li>
                                       {{-- <li class="font-extrabold text-white text-xl">{{ $countCollector }}</li> --}}
                                       <li class="font-extrabold text-white text-xl">99</li>
                                       <i class="ri-map-pin-user-fill mr-3 text-lg text-white"></i>
@@ -478,10 +478,10 @@
 
                                   <div class="w-3/5 flex justify-start">
                                       <ul>
-                                          <li class="font-bold text-white">Residents</li>
+                                          <li class="font-bold text-white">Products</li>
                                           {{-- <li class="font-extrabold text-white text-xl">{{ $countResidents }}</li> --}}
                                           <li class="font-extrabold text-white text-xl">99</li>
-                                          <i class="ri-user-fill mr-3 text-lg text-white"></i>
+                                          <i class="ri-shopping-cart-fill mr-3 text-lg text-white"></i>
                                       </ul>
                                   </div>
                               </div>
@@ -515,25 +515,25 @@
                 new Chart(barchart, {
                     type: 'bar',
                     data: {
-                        labels: ['Admin (Active)', 'Admin (Inactive)', 'Collector (Active)', 'Collector (Inactive)', 'Residents (Active)', 'Residents (Inactive)'],
+                        labels: ['Hotdog', 'Ham', 'Bread', 'Fruits', 'Meat'],
                         datasets: [{
-                            label: 'Active and Inactive Users',
+                            label: 'Products',
                             data: [100, 50, 80, 30, 120, 70], // Static values here
                             backgroundColor: [
                                 'rgb(255, 99, 132)',
-                                'rgb(173, 216, 230)',
-                                'rgb(255, 159, 64)',
-                                'rgb(255, 182, 193)',
-                                'rgb(255, 205, 86)',
-                                'rgb(255, 222, 173)'
+                                // 'rgb(173, 216, 230)',
+                                // 'rgb(255, 159, 64)',
+                                // 'rgb(255, 182, 193)',
+                                // 'rgb(255, 205, 86)',
+                                // 'rgb(255, 222, 173)'
                             ],
                             borderColor: [
                                 'rgb(255, 99, 132)',
-                                'rgb(173, 216, 230)',
-                                'rgb(255, 159, 64)',
-                                'rgb(255, 182, 193)',
-                                'rgb(255, 205, 86)',
-                                'rgb(255, 222, 173)'
+                                // 'rgb(173, 216, 230)',
+                                // 'rgb(255, 159, 64)',
+                                // 'rgb(255, 182, 193)',
+                                // 'rgb(255, 205, 86)',
+                                // 'rgb(255, 222, 173)'
                             ],
                             borderWidth: 1
                         }]
@@ -569,14 +569,14 @@
                 new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Admin', 'Collector', 'Residents'],
+                        labels: ['Admin', 'Consumer'],
                         datasets: [{
                             label: 'Number of Users',
                             data: [50, 30, 70], // Static values here
                             backgroundColor: [
                                 '#059BFF',
                                 '#FF4069',
-                                '#FF9020',
+                                // '#FF9020',
                             ],
                             borderWidth: 1
                         }]
