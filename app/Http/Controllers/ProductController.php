@@ -154,7 +154,7 @@ class ProductController extends Controller
         // Update the product with the image path
         $product->update(['qr_code_image' => $imagePath]);
 
-        return view('qr-code')->with('qr_code', $qr_code);
+        return view('user.qr-code')->with('qr_code', $qr_code);
     }
 
      // public qrcode folder path
@@ -196,7 +196,7 @@ class ProductController extends Controller
          // Update the product with the image path
          $product->update(['qr_code_image' => $imagePath]);
 
-         return view('admin-qr-code')->with('qr_code', $qr_code);
+         return view('admin.admin-qr-code')->with('qr_code', $qr_code);
      }
 
     public function showProductCreated(Products $product)
