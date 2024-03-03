@@ -134,27 +134,27 @@
                 @csrf
                 <div class="bg-white rounded-xl shadow-xl border-solid my-5 py-0.5 pb-10 px-5 mx-auto w-full sm:w-[450px] h-full sm:h-[48 0px]">
                 <h1 class="mt-6 text-2xl font-bold text-center">Add New Product</h1>
-    
+
                 <label for="product_name" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Product Name:</label>
                 <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" id="product_name" name="product_name" required>
-    
-    
+
+
                 <label for="categories" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Categories</label>
                 <select id="categories" name="categories" required>
-                    <option value="">Select Categories</option>
+                    <option value="sample">Select Categories</option>
                 </select>
-    
-    
+
+
                 <label for="quantity" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity</label>
                 <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" id="quantity" name="quantity" required>
-    
+
                 <label for="expiration_date" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Expiration Date:</label>
                 <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" id="expiration_date" name="expiration_date" required>
-    
+
                 <button type="submit" class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-full mt-6">Save</button>
             </form>
         </div>
-    
+
         <!-- Create Schedule Design -->
         <style>
             .form {
@@ -162,12 +162,12 @@
                 max-width: 500px;
                 margin: 0 auto;
             }
-    
+
             label {
                 display: block;
                 margin-top: 20px;
             }
-    
+
             input,
             select,
             textarea {
@@ -177,13 +177,13 @@
                 border: 1px solid #ccc;
                 border-radius: 4px;
             }
-    
+
             input[type="submit"] {
                 margin-top: 20px;
                 background-color: green;
                 color: white;
             }
-    
+
         </style>
 
     <script>
