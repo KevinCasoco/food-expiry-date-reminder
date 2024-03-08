@@ -73,12 +73,12 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
-Route::middleware('auth', 'status')->group(function () {
+Route::middleware('auth', 'status', 'verified')->group(function () {
 
     // Route::get('register', [RoleController::class, 'roleInRegister'])->name('register');
 
-    // Route::get('register', [RegisteredUserController::class, 'create'])
-    //             ->name('register');
+    Route::get('register', [RegisteredUserController::class, 'create'])
+                ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 

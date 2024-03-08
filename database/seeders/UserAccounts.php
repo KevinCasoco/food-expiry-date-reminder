@@ -19,7 +19,9 @@ class UserAccounts extends Seeder
 
         // seeding admin
         $admin = User::create([
-            'name' => 'Kevin Casoco',
+            'first_name' => 'Kevin',
+            'middle_name' => 'D',
+            'last_name' => 'Casoco',
             'email' => 'andreikevincasoco@gmail.com',
             'email_verified_at' => '2024-02-02 12:42:50',
             'password' => Hash::make('12345'),
@@ -28,7 +30,9 @@ class UserAccounts extends Seeder
 
         // seeding user
         $editor = User::create([
-            'name' => 'Kevin Casoco',
+            'first_name' => 'Kevin',
+            'middle_name' => 'D',
+            'last_name' => 'Casoco',
             'email' => 'kevs404official@gmail.com',
             'email_verified_at' => '2024-02-02 12:42:50',
             'password' => Hash::make('12345'),
