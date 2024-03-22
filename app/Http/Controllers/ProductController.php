@@ -100,7 +100,9 @@ class ProductController extends Controller
 
         Products::create($request->all());
 
-        return redirect('/');
+        $data = Products::paginate(10); // Paginate with 10 items per page
+
+        return view('user.product-information', compact('data'));
     }
 
     public function productCodeExist($number)

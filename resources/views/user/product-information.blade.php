@@ -153,6 +153,8 @@
                                 <th data-priority="4">Categories</th>
                                 <th data-priority="5">Quantity</th>
                                 <th data-priority="6">Expiration Date</th>
+                                <th data-priority="7">Status</th>
+                                <th data-priority="8">Actions</th>
                                 {{-- <th data-priority="6">QR CODE</th> --}}
                             </tr>
                         </thead>
@@ -172,7 +174,8 @@
                                 <td >{{ $products->categories }}</td>
                                 <td >{{ $products->quantity }}</td>
                                 <td >{{ $products->expiration_date }}</td>
-                                {{-- <td ><img src="{{ asset($products->qr_code_image) }}" alt="QR Code"></td> --}}
+                                <td >#</td>
+                                <td >#</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -193,7 +196,7 @@
                         x-transition:leave-end="opacity-0 transform scale-95"
                         class="bg-white rounded-lg overflow-hidden transform transition-all flex justify-start">
                         <!-- ... (modal content) ... -->
-                        <div class="bg-white py-3 w-full sm:w-[340px] h-full sm:h-[550px]">
+                        <div class="bg-white py-3 w-full sm:w-[340px] h-full sm:h-[450px]">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white w-full pb-3 ml-5">
                                     Add New Products
@@ -202,30 +205,21 @@
                             <hr class="bg-black border-gray-300 w-full">
                             <form action="{{ route('user.create_products') }}" method="post" class="pl-5 pr-5 pt-3 pb-3">
                                 @csrf
-                                <label for="first_name" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">First Name:</label>
-                                <input type="text" name="first_name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
+                                <label for="product_name" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Product Name:</label>
+                                <input type="text" name="product_name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
 
-                                <label for="last_name" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Last Name:</label>
-                                <input type="text" name="last_name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
-
-                                <label for="email" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Email:</label>
-                                <input type="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
-
-                                <label for="password" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Password:</label>
-                                <input type="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
-
-                                <label for="role" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Role:</label>
-                                    <select name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px] mb-2" required>
-                                        <option value="admin">Admin</option>
-                                        {{-- <option value="collector">Collector</option> --}}
-                                        {{-- <option value="resident">Resident</option> --}}
+                                <label for="categories" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Categories:</label>
+                                    <select name="categories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px] mb-2" required>
+                                        <option value="sample">Select Categories</option>
+                                        <option value="frozen food">Frozen Food</option>
                                     </select>
 
-                                <label for="status" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Status:</label>
-                                <select name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px]" required>
-                                    <option value="active" selected>Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
+                                <label for="quantity" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity</label>
+                                <input type="number" name="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
+
+                                <label for="expiration_date" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Expiration Date:</label>
+                                <input type="date" name="expiration_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
+
                             <div class="flex justify-end mt-3">
                                 <button type="submit"
                                         class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
