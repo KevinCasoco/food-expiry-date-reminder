@@ -13,55 +13,15 @@ class Products extends Seeder
      */
     public function run(): void
     {
-         // seeding admin
-         $products = ModelsProducts::create([
-            'product_name' => 'hotdog',
-            'categories' => 'frozen food',
-            'quantity' => '5',
-            'expiration_date' => '2024-02-02 12:42:50',
-            'date_consumed' => '2024-02-04 12:42:50',
-            'status' => 'expired'
+        // seeding products
+        //  $products = ModelsProducts::create([
+        //     'product_name' => 'hotdog',
+        //     'categories' => 'frozen food',
+        //     'quantity' => '5',
+        //     'expiration_date' => '2024-02-02 12:42:50',
+        //     'date_consumed' => '2024-02-04 12:42:50',
+        //     'status' => 'expired'
 
-        ]);
-
-        // seeding admin
-        $products = ModelsProducts::create([
-            'product_name' => 'hotdog',
-            'categories' => 'frozen food',
-            'quantity' => '5',
-            'expiration_date' => '2024-02-02 12:42:50',
-            'date_consumed' => '2024-02-04 12:42:50',
-            'status' => 'expired'
-        ]);
-
-        // seeding admin
-        $products = ModelsProducts::create([
-            'product_name' => 'hotdog',
-            'categories' => 'frozen food',
-            'quantity' => '5',
-            'expiration_date' => '2024-02-02 12:42:50',
-            'date_consumed' => '2024-02-04 12:42:50',
-            'status' => 'expired'
-        ]);
-
-        // seeding admin
-        $products = ModelsProducts::create([
-            'product_name' => 'hotdog',
-            'categories' => 'frozen food',
-            'quantity' => '5',
-            'expiration_date' => '2024-02-02 12:42:50',
-            'date_consumed' => '2024-02-04 12:42:50',
-            'status' => 'expired'
-        ]);
-
-        // seeding admin
-        $products = ModelsProducts::create([
-            'product_name' => 'hotdog',
-            'categories' => 'frozen food',
-            'quantity' => '5',
-            'expiration_date' => '2024-02-02 12:42:50',
-            'date_consumed' => '2024-02-04 12:42:50',
-            'status' => 'expired'
-        ]);
+        // ]);
     }
 }
