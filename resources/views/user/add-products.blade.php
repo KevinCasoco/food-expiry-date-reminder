@@ -54,7 +54,7 @@
                             <span class="text-sm">QR Code Scanner</span>
                         </a>
                     </li>
-                    <li class="mb-1 group">
+                    {{-- <li class="mb-1 group">
                         <a href="{{ route('user.product-information') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-shopping-cart-fill mr-3 text-lg"></i>
@@ -67,7 +67,7 @@
                             <i class="ri-calendar-2-fill mr-3 text-lg"></i>
                             <span class="text-sm">Consumed Products</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="mb-1 group">
                         <a href="{{ route('user.expired-products') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
