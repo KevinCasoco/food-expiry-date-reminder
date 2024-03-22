@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('product_code');
             $table->string('product_name')->nullable();
             $table->string('categories')->nullable();
-            $table->decimal('quantity')->nullable();
+            $table->integer('quantity')->nullable();
             $table->date('expiration_date')->nullable();
             $table->date('date_consumed')->nullable();
             $table->string('status')->nullable();

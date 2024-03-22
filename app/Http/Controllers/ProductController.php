@@ -88,6 +88,25 @@ class ProductController extends Controller
         return view('user.calendar');
     }
 
+    public function create_products(Request $request)
+    {
+        $number = mt_rand(1000000000,9999999999);
+
+        if ($this->productCodeExist($number)) {
+            $number = mt_rand(1000000000,9999999999);
+        }
+
+        $request['product_code'] = $number;
+
+        Products::create($request->all());
+
+        return redirect('/');
+    }
+
+    public function productCodeExist($number)
+    {
+        return Products::whereProductCode($number)->exists();
+    }
 
     // without saving the qr code image to public folder
     // public function create_products(Request $request)
@@ -116,46 +135,46 @@ class ProductController extends Controller
     // }
 
     // public qrcode folder path
-    public function create_products(Request $request)
-    {
-        // Validate the request
-        $request->validate([
-            'product_name' => 'required|string',
-            'categories' => 'required|string',
-            'quantity' => 'required',
-            'expiration_date' => 'required|string',
-        ]);
+    // public function create_products(Request $request)
+    // {
+    //     // Validate the request
+    //     $request->validate([
+    //         'product_name' => 'required|string',
+    //         'categories' => 'required|string',
+    //         'quantity' => 'required',
+    //         'expiration_date' => 'required|string',
+    //     ]);
 
-        // Create the products before generating the qr_code
-        $product = Products::create([
-            'product_name' => $request->input('product_name'),
-            'categories' => $request->input('categories'),
-            'quantity' => $request->input('quantity'),
-            'expiration_date' => $request->input('expiration_date'),
-        ]);
+    //     // Create the products before generating the qr_code
+    //     $product = Products::create([
+    //         'product_name' => $request->input('product_name'),
+    //         'categories' => $request->input('categories'),
+    //         'quantity' => $request->input('quantity'),
+    //         'expiration_date' => $request->input('expiration_date'),
+    //     ]);
 
-        // Generate QR code based on product information
-        // without spacing
-        // $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
+    //     // Generate QR code based on product information
+    //     // without spacing
+    //     // $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
 
-        // with spacing new line
-        $qr_code_string =
-            $product->product_name . PHP_EOL .
-            $product->categories . PHP_EOL .
-            $product->quantity . PHP_EOL .
-            $product->expiration_date;
+    //     // with spacing new line
+    //     $qr_code_string =
+    //         $product->product_name . PHP_EOL .
+    //         $product->categories . PHP_EOL .
+    //         $product->quantity . PHP_EOL .
+    //         $product->expiration_date;
 
-        $qr_code = QrCode::generate($qr_code_string);
+    //     $qr_code = QrCode::generate($qr_code_string);
 
-        // Save the QR code image to storage
-        $imagePath = 'qrcodes/' . $product->product_name . '_qr_code.png';
-        file_put_contents(public_path($imagePath), base64_decode($qr_code));
+    //     // Save the QR code image to storage
+    //     $imagePath = 'qrcodes/' . $product->product_name . '_qr_code.png';
+    //     file_put_contents(public_path($imagePath), base64_decode($qr_code));
 
-        // Update the product with the image path
-        $product->update(['qr_code_image' => $imagePath]);
+    //     // Update the product with the image path
+    //     $product->update(['qr_code_image' => $imagePath]);
 
-        return view('user.qr-code')->with('qr_code', $qr_code);
-    }
+    //     return view('user.qr-code')->with('qr_code', $qr_code);
+    // }
 
      // public qrcode folder path
      public function admin_create_products(Request $request)

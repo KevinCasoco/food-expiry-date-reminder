@@ -148,10 +148,11 @@
                         <thead>
                             <tr>
                                 <th data-priority="1">ID</th>
-                                <th data-priority="2">Product Name</th>
-                                <th data-priority="3">Categories</th>
-                                <th data-priority="4">Quantity</th>
-                                <th data-priority="5">Expiration Date</th>
+                                <th data-priority="2">Product Code</th>
+                                <th data-priority="3">Product Name</th>
+                                <th data-priority="4">Categories</th>
+                                <th data-priority="5">Quantity</th>
+                                <th data-priority="6">Expiration Date</th>
                                 {{-- <th data-priority="6">QR CODE</th> --}}
                             </tr>
                         </thead>
@@ -161,6 +162,12 @@
                             @foreach($data as $products)
                             <tr>
                                 <td >{{ $products->id }}</td>
+                                {{-- bar code with id --}}
+                                <td>{!!DNS1D::getBarcodeHTML("$products->product_code", 'PHARMA')!!}
+                                p - {{$products->product_code}}</td>
+                                {{-- qr code --}}
+                                {{-- <td>{!!DNS2D::getBarcodeHTML("$products->product_code", 'QRCODE')!!}</td> --}}
+                                {{-- <td >{{ $products->product_code }}</td> --}}
                                 <td >{{ $products->product_name }}</td>
                                 <td >{{ $products->categories }}</td>
                                 <td >{{ $products->quantity }}</td>
