@@ -162,7 +162,12 @@
                             @foreach($data as $products)
                             <tr>
                                 <td >{{ $products->id }}</td>
-                                <td >{{ $products->product_code }}</td>
+                                {{-- bar code with id --}}
+                                <td>{!!DNS1D::getBarcodeHTML("$products->product_code", 'PHARMA')!!}
+                                p - {{$products->product_code}}</td>
+                                {{-- qr code --}}
+                                {{-- <td>{!!DNS2D::getBarcodeHTML("$products->product_code", 'QRCODE')!!}</td> --}}
+                                {{-- <td >{{ $products->product_code }}</td> --}}
                                 <td >{{ $products->product_name }}</td>
                                 <td >{{ $products->categories }}</td>
                                 <td >{{ $products->quantity }}</td>
