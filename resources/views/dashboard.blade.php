@@ -141,8 +141,7 @@
                               <ul>
                                   <li class="font-extrabold text-white">
                                       Users</li>
-                                  {{-- <li class="font-extrabold text-white text-xl">{{ $countAdmins }}</li> --}}
-                                  <li class="font-extrabold text-white text-xl">99</li>
+                                  <li class="font-extrabold text-white text-xl">{{ $countConsumer }}</li>
                                   <i class="ri-admin-fill mr-3 text-lg text-white"></i>
                               </ul>
                           </div>
@@ -156,8 +155,7 @@
                                   <ul>
                                       <li class="font-extrabold text-white">
                                           Products</li>
-                                      {{-- <li class="font-extrabold text-white text-xl">{{ $countCollector }}</li> --}}
-                                      <li class="font-extrabold text-white text-xl">99</li>
+                                      <li class="font-extrabold text-white text-xl">{{ $countProducts }}</li>
                                       <i class="ri-shopping-cart-fill mr-3 text-lg text-white"></i>
                                   </ul>
                               </div>
@@ -169,8 +167,7 @@
                                   <div class="w-3/5 flex justify-start">
                                       <ul>
                                           <li class="font-bold text-white">Consumed</li>
-                                          {{-- <li class="font-extrabold text-white text-xl">{{ $countResidents }}</li> --}}
-                                          <li class="font-extrabold text-white text-xl">99</li>
+                                          <li class="font-extrabold text-white text-xl">{{ $countExpired }}</li>
                                           <i class="ri-calendar-2-fill text-lg text-white"></i>
                                       </ul>
                                   </div>
@@ -181,8 +178,7 @@
                                       <div class="w-3/5 flex justify-start">
                                           <ul>
                                               <li class="font-bold text-white">Expired</li>
-                                              {{-- <li class="font-extrabold text-white text-xl">{{ $totalUser }}</li> --}}
-                                              <li class="font-extrabold text-white text-xl">99</li>
+                                              <li class="font-extrabold text-white text-xl">{{ $countConsumed }}</li>
                                               <i class="ri-pass-expired-fill mr-3 text-lg text-white"></i>
                                           </ul>
                                       </div>
@@ -371,7 +367,7 @@
                             <span class="text-sm">Product List</span>
                         </a>
                     </li>
-                    <li class="mb-1 group">
+                    {{-- <li class="mb-1 group">
                         <a href="{{ route('admin.admin-consumed-products') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-calendar-2-fill mr-3 text-lg"></i>
@@ -384,7 +380,7 @@
                             <i class="ri-pass-expired-fill mr-3 text-lg"></i>
                             <span class="text-sm">Expired Products</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="mb-1 group">
                         <a href="{{ asset('profile') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
@@ -451,9 +447,8 @@
                               <ul>
                                   <li class="font-extrabold text-white">
                                       Admin</li>
-                                  {{-- <li class="font-extrabold text-white text-xl">{{ $countAdmins }}</li> --}}
-                                  <li class="font-extrabold text-white text-xl">99</li>
-                                  <i class="ri-admin-fill mr-3 text-lg text-white"></i>
+                                  <li class="font-extrabold text-white text-xl">{{ $countAdmins }}</li>
+                                <i class="ri-admin-fill mr-3 text-lg text-white"></i>
                               </ul>
                           </div>
                       </div>
@@ -466,8 +461,7 @@
                                   <ul>
                                       <li class="font-extrabold text-white">
                                           Consumer</li>
-                                      {{-- <li class="font-extrabold text-white text-xl">{{ $countCollector }}</li> --}}
-                                      <li class="font-extrabold text-white text-xl">99</li>
+                                      <li class="font-extrabold text-white text-xl">{{ $countConsumer }}</li>
                                       <i class="ri-map-pin-user-fill mr-3 text-lg text-white"></i>
                                   </ul>
                               </div>
@@ -479,8 +473,7 @@
                                   <div class="w-3/5 flex justify-start">
                                       <ul>
                                           <li class="font-bold text-white">Products</li>
-                                          {{-- <li class="font-extrabold text-white text-xl">{{ $countResidents }}</li> --}}
-                                          <li class="font-extrabold text-white text-xl">99</li>
+                                          <li class="font-extrabold text-white text-xl">{{ $countProducts }}</li>
                                           <i class="ri-shopping-cart-fill mr-3 text-lg text-white"></i>
                                       </ul>
                                   </div>
@@ -491,8 +484,7 @@
                                       <div class="w-3/5 flex justify-start">
                                           <ul>
                                               <li class="font-bold text-white">Total Users</li>
-                                              {{-- <li class="font-extrabold text-white text-xl">{{ $totalUser }}</li> --}}
-                                              <li class="font-extrabold text-white text-xl">99</li>
+                                              <li class="font-extrabold text-white text-xl">{{ $totalUser }}</li>
                                               <i class="ri-user-fill mr-3 text-lg text-white"></i>
                                           </ul>
                                       </div>
