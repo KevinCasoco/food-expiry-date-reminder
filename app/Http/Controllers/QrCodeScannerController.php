@@ -10,4 +10,9 @@ class QrCodeScannerController extends Controller
     {
         return view('user.qr-code-scanner');
     }
+
+    public function bar_code_scanner()
+    {
+        return view('user.bar-code-scanner');
+    }
 }

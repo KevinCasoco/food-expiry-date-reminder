@@ -144,6 +144,9 @@ Route::middleware('auth', 'verified')->group(function () {
     // qr code scanner
     Route::get('/qr-code-scanner', [QrCodeScannerController::class, 'qr_code_scanner'])->name('user.qr-code-scanner');
 
+    // bar code scanner
+    Route::get('/bar-code-scanner', [QrCodeScannerController::class, 'bar_code_scanner'])->name('user.bar-code-scanner');
+
     // user list
     Route::get('/user-list', [UserController::class, 'user_list'])->name('user.user-list');
 
