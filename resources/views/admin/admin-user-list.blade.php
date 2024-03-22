@@ -142,24 +142,27 @@
                         <thead>
                             <tr>
                                 <th data-priority="1">ID</th>
-                                <th data-priority="2">Full Name</th>
-                                <th data-priority="3">Email</th>
-                                <th data-priority="4">Role</th>
-                                <th data-priority="5">Status</th>
+                                <th data-priority="2">First Name</th>
+                                <th data-priority="3">Middle Name</th>
+                                <th data-priority="4">Last Name</th>
+                                <th data-priority="5">Email</th>
+                                <th data-priority="6">Role</th>
+                                <th data-priority="7">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
 
-                            @foreach($data as $products)
+                            @foreach($data as $user)
                             {{-- <tr x-on:click="itemToEdit = {{ $item->id }};"> --}}
                             <tr>
-                                <td >{{ $products->id }}</td>
-                                <td >{{ $products->name }}</td>
-                                <td >{{ $products->email }}</td>
-                                <td >{{ $products->role }}</td>
-                                <td >{{ $products->status }}</td>
-                                {{-- <td >{{ $products->expiration_date }}</td> --}}
+                                <td >{{ $user->id }}</td>
+                                <td >{{ $user->first_name }}</td>
+                                <td >{{ $user->middle_name }}</td>
+                                <td >{{ $user->last_name }}</td>
+                                <td >{{ $user->email }}</td>
+                                <td >{{ $user->role }}</td>
+                                <td >{{ $user->status }}</td>
                             </tr>
                             @endforeach
                         </tbody>
