@@ -107,40 +107,12 @@ class ProductController extends Controller
     //     return view('user.product-information', compact('data'));
     // }
 
-    // public function create_products(Request $request)
-    // {
-    //     $number = mt_rand(1000000000,9999999999);
-
-    //     if ($this->productCodeExist($number)) {
-    //         $number = mt_rand(1000000000,9999999999);
-    //     }
-
-    //     $request['product_code'] = $number;
-
-    //     // Create the product
-    //     $product = Products::create($request->all());
-
-    //     // Generate barcode HTML
-    //     $barcodeHTML = DNS1D::getBarcodeHTML("$product->product_code", 'C128');
-
-    //     // Generate barcode image
-    //     $barcodeImage = DNS1D::getBarcodePNGPath("$product->product_code", 'C128');
-
-    //     // Save the barcode image to storage
-    //     $barcodeImagePath = storage_path("app/public/barcodes/{$product->id}.png");
-    //     file_put_contents($barcodeImagePath, file_get_contents($barcodeImage));
-
-    //     $data = Products::paginate(10); // Paginate with 10 items per page
-
-    //     return view('user.product-information', compact('data'));
-    // }
-
     public function create_products(Request $request)
     {
-        $number = mt_rand(1000000000, 9999999999);
+        $number = mt_rand(1000000000,9999999999);
 
         if ($this->productCodeExist($number)) {
-            $number = mt_rand(1000000000, 9999999999);
+            $number = mt_rand(1000000000,9999999999);
         }
 
         $request['product_code'] = $number;
@@ -148,23 +120,51 @@ class ProductController extends Controller
         // Create the product
         $product = Products::create($request->all());
 
-        // Create directory for barcode images
-        $directory = storage_path("app/public/barcodes");
-        if (!file_exists($directory)) {
-            mkdir($directory, 0777, true);
-        }
+        // Generate barcode HTML
+        $barcodeHTML = DNS1D::getBarcodeHTML("$product->product_code", 'C128');
 
         // Generate barcode image
-        $barcodeImage = DNS1D::getBarcodePNGPath("$product->product_code", 'C128');
+        // $barcodeImage = DNS1D::getBarcodePNGPath("$product->product_code", 'C128');
 
-        // Save the barcode image to storage
-        $barcodeImagePath = storage_path("app/public/barcodes/{$product->id}.png");
-        copy($barcodeImage, $barcodeImagePath);
+        // // Save the barcode image to storage
+        // $barcodeImagePath = storage_path("app/public/barcodes/{$product->id}.png");
+        // file_put_contents($barcodeImagePath, file_get_contents($barcodeImage));
 
         $data = Products::paginate(10); // Paginate with 10 items per page
 
         return view('user.product-information', compact('data'));
     }
+
+    // public function create_products(Request $request)
+    // {
+    //     $number = mt_rand(1000000000, 9999999999);
+
+    //     if ($this->productCodeExist($number)) {
+    //         $number = mt_rand(1000000000, 9999999999);
+    //     }
+
+    //     $request['product_code'] = $number;
+
+    //     // Create the product
+    //     $product = Products::create($request->all());
+
+    //     // Create directory for barcode images
+    //     $directory = storage_path("app/public/barcodes");
+    //     if (!file_exists($directory)) {
+    //         mkdir($directory, 0777, true);
+    //     }
+
+    //     // Generate barcode image
+    //     $barcodeImage = DNS1D::getBarcodePNGPath("$product->product_code", 'C128');
+
+    //     // Save the barcode image to storage
+    //     $barcodeImagePath = storage_path("app/public/barcodes/{$product->id}.png");
+    //     copy($barcodeImage, $barcodeImagePath);
+
+    //     $data = Products::paginate(10); // Paginate with 10 items per page
+
+    //     return view('user.product-information', compact('data'));
+    // }
 
     public function productCodeExist($number)
     {
