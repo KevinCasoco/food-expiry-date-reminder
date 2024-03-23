@@ -96,7 +96,7 @@ class ProductController extends Controller
             $user->notify(new EmailNotification());
         }
 
-        return redirect()->route('user.calendar')->with('message', 'Emails were sent successfully.');
+        return view('user.calendar')->with('message', 'Emails were sent successfully.');
     }
 
     // public function create_products(Request $request)
