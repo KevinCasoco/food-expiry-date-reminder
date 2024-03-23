@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
+use App\Notifications\EmailNotification;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -87,7 +89,14 @@ class ProductController extends Controller
 
         // $data = Products::paginate(10); // Paginate with 10 items per page
 
-        return view('user.calendar');
+        $users = User::where('role', 'consumer')->get();
+
+        foreach ($users as $user) {
+            // Notify user about expired products
+            $user->notify(new EmailNotification());
+        }
+
+        return redirect()->route('user.calendar')->with('message', 'Emails were sent successfully.');
     }
 
     // public function create_products(Request $request)
