@@ -138,6 +138,7 @@ Route::middleware('auth', 'verified')->group(function () {
 
     // product list
     Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('user.product-information');
+    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('user.product-information.destroy');
 
     // qr code scanner
     Route::get('/qr-code-scanner', [QrCodeScannerController::class, 'qr_code_scanner'])->name('user.qr-code-scanner');

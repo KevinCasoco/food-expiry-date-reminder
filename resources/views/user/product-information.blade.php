@@ -175,7 +175,14 @@
                                 <td >{{ $products->quantity }}</td>
                                 <td >{{ $products->expiration_date }}</td>
                                 <td >{{ $products->status }}</td>
-                                <td >#</td>
+                                <td class="text-center ">
+                                    <button
+                                        @click="adminDelete = true; itemToDelete = $event.target.getAttribute('data-item-id')"
+                                        data-item-id="{{ $products->id }}"
+                                        class="py-1 px-4 rounded bg-red-500 hover:bg-red-700 text-white">
+                                        <i class="ri-delete-bin-5-fill mr-1"></i>Delete
+                                    </button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -245,11 +252,60 @@
                     </div>
                 </div>
 
+                <!-- Delete Modal -->
+                <div x-show="adminDelete"
+                class="fixed inset-0 overflow-y-auto flex items-center justify-center z-30" x-cloak>
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+
+                <div x-show="adminDelete" @click.away="adminDelete = false"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform scale-95"
+                    x-transition:enter-end="opacity-100 transform scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 transform scale-100"
+                    x-transition:leave-end="opacity-0 transform scale-95"
+                    class="bg-white rounded-lg overflow-hidden transform transition-all flex justify-start">
+                    <!-- ... (modal content) ... -->
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-col">
+                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure
+                            you want to delete this admin?</h3>
+                        <div class="flex justify-end items-end pb-2">
+                            <form method="post"
+                                :action="`{{ route('user.product-information.destroy', '') }}/${itemToDelete}`">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Delete
+                                </button>
+                            </form>
+                            <div class="absolute mr-[90px]">
+                                <button @click="adminDelete = false"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
                 </div>
             </div>
         </div>
     </div>
 
+     {{-- Alphine --}}
+     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
         <script>
             $(document).ready(function() {
                 var empDataTable = $('#example').DataTable({
@@ -326,6 +382,13 @@
         btn.addEventListener("click", () => {
         sidebar.classList.toggle("-translate-x-full");
         });
+    </script>
+
+    <script>
+        function deleteItem(itemId) {
+            // Set the itemToDelete value based on the clicked item's ID
+            this.itemToDelete = itemId;
+        }
     </script>
     @endif
 </x-app-layout>

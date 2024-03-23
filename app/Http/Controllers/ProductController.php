@@ -185,6 +185,14 @@ class ProductController extends Controller
         return response()->json(['message' => 'Event deleted successfully']);
     }
 
+    public function destroy($id)
+    {
+        $products = Products::findOrFail($id);
+        $products->delete();
+
+        return redirect()->route('user.product-information')->with('message', 'Admin deleted successfully');
+    }
+
     public function resize(Request $request, $id)
     {
         $schedule = Products::findOrFail($id);
