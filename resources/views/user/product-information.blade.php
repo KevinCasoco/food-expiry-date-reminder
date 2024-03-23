@@ -229,7 +229,7 @@
 
                                 <label for="status" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Status:</label>
                                 <select name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px] mb-2" required>
-                                    <option value="">Select Categories</option>
+                                    <option value="">Select Status</option>
                                     <option value="available">Available</option>
                                     <option value="consumed">Consumed</option>
                                     <option value="expired">Expired</option>
