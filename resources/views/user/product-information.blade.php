@@ -174,7 +174,7 @@
                                 <td >{{ $products->categories }}</td>
                                 <td >{{ $products->quantity }}</td>
                                 <td >{{ $products->expiration_date }}</td>
-                                <td >#</td>
+                                <td >{{ $products->status }}</td>
                                 <td >#</td>
                             </tr>
                             @endforeach
@@ -196,7 +196,7 @@
                         x-transition:leave-end="opacity-0 transform scale-95"
                         class="bg-white rounded-lg overflow-hidden transform transition-all flex justify-start">
                         <!-- ... (modal content) ... -->
-                        <div class="bg-white py-3 w-full sm:w-[340px] h-full sm:h-[450px]">
+                        <div class="bg-white py-3 w-full sm:w-[340px] h-full sm:h-[480px]">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white w-full pb-3 ml-5">
                                     Add New Products
@@ -219,6 +219,14 @@
 
                                 <label for="expiration_date" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Expiration Date:</label>
                                 <input type="date" name="expiration_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
+
+                                <label for="status" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Status:</label>
+                                <select name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px] mb-2" required>
+                                    <option value="">Select Categories</option>
+                                    <option value="available">Available</option>
+                                    <option value="consumed">Consumed</option>
+                                    <option value="expired">Expired</option>
+                                </select>
 
                             <div class="flex justify-end mt-3">
                                 <button type="submit"
