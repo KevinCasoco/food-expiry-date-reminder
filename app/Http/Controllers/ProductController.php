@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
@@ -168,6 +169,39 @@ class ProductController extends Controller
     public function productCodeExist($number)
     {
         return Products::whereProductCode($number)->exists();
+    }
+
+    public function getEvents()
+    {
+        $schedules = Products::all();
+        return response()->json($schedules);
+    }
+
+    public function deleteEvent($id)
+    {
+        $schedule = Products::findOrFail($id);
+        $schedule->delete();
+
+        return response()->json(['message' => 'Event deleted successfully']);
+    }
+
+    public function resize(Request $request, $id)
+    {
+        $schedule = Products::findOrFail($id);
+
+        $newEndDate = Carbon::parse($request->input('expiration_date'))->setTimezone('UTC');
+        $schedule->update(['end' => $newEndDate]);
+
+        return response()->json(['message' => 'Event resized successfully.']);
+    }
+
+    public function search(Request $request)
+    {
+        $searchKeywords = $request->input('location');
+
+        $matchingEvents = Products::where('location', 'like', '%' . $searchKeywords . '%')->get();
+
+        return response()->json($matchingEvents);
     }
 
     // without saving the qr code image to public folder
