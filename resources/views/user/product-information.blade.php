@@ -165,7 +165,7 @@
                             <tr>
                                 <td >{{ $products->id }}</td>
                                 {{-- bar code with id --}}
-                                <td>{!!DNS1D::getBarcodeHTML("$products->product_code", 'PHARMA')!!}
+                                <td>{!!DNS1D::getBarcodeHTML("$products->product_code", 'C128')!!}
                                 p - {{$products->product_code}}</td>
                                 {{-- qr code --}}
                                 {{-- <td>{!!DNS2D::getBarcodeHTML("$products->product_code", 'QRCODE')!!}</td> --}}
