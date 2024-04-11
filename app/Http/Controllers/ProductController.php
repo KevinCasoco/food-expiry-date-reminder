@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
 use App\Notifications\EmailNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -97,6 +98,47 @@ class ProductController extends Controller
         }
 
         return view('user.calendar')->with('message', 'Emails were sent successfully.');
+    }
+
+    public function store(Request $request)
+    {
+        $userId = Auth::user()->id;
+
+        $schedule = new Products([
+            'product_name' =>$request->product_name,
+            'expiration_date' =>$request->expiration_date,
+        ]);
+
+        $user = User::find($userId);
+
+        $user->schedules()->save($schedule);
+
+        return response()->json($schedule);
+    }
+
+    public function schedule()
+    {
+        $events = array();
+        $schedules = Products::all();
+        foreach($schedules as $schedule) {
+            $color = null;
+            if ($schedule->product_name == 'Test') {
+                $color = '#924ACE';
+            }
+
+            if ($schedule->product_name == 'Test 1') {
+                $color = '#68801A';
+            }
+
+            $events[] = [
+                'id' => $schedule->id,
+                'title' => $schedule->product_name, // Change 'title' to 'product_name'
+                'start' => $schedule->expiration_date, // Assuming 'expiration_date' is your event start date/time
+                'color' => $color
+            ];
+        }
+
+        return view('user.calendar', ['events' => json_encode($events)]); // Convert events array to JSON
     }
 
     // public function create_products(Request $request)

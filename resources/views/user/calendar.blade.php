@@ -47,13 +47,13 @@
                             <span class="text-sm">Calendar</span>
                         </a>
                     </li>
-                    <li class="mb-1 group">
+                    {{-- <li class="mb-1 group">
                         <a href="{{ route('user.qr-code-scanner') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-qr-scan-fill mr-3 text-lg"></i>
                             <span class="text-sm">QR Code Scanner</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="mb-1 group">
                         <a href="{{ route('user.product-information') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
@@ -181,13 +181,10 @@
 
                 // Deleting The Event
                 eventContent: function(info) {
-                    var address = info.event.extendedProps.location; // Assuming the address is stored within the location property
-                    var secondPart = address.split(',')[1].trim();
-                    console.log(secondPart);
+                    var product_name = info.event.extendedProps.product_name; // Assuming the address is stored within the location property
 
-                    var eventTitle = secondPart; // You can use this part of the address as the event title, if needed
                     var eventElement = document.createElement('div');
-                    eventElement.innerHTML = '<span style="cursor: pointer;">❌</span> ' + eventTitle;
+                    eventElement.innerHTML = '<span style="cursor: pointer;">❌</span> ' + product_name;
 
                     eventElement.querySelector('span').addEventListener('click', function() {
                         // Trigger Bootstrap modal for confirmation
@@ -221,52 +218,52 @@
 
                 // Drag And Drop
 
-                eventDrop: function(info) {
-                    var eventId = info.event.id;
-                    var newStartDate = info.event.start;
-                    var newEndDate = info.event.end || newStartDate;
-                    var newStartDateUTC = newStartDate.toISOString().slice(0, 10);
-                    var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
+                // eventDrop: function(info) {
+                //     var eventId = info.event.id;
+                //     var newStartDate = info.event.start;
+                //     var newEndDate = info.event.end || newStartDate;
+                //     var newStartDateUTC = newStartDate.toISOString().slice(0, 10);
+                //     var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
 
-                    $.ajax({
-                        method: 'PUT',
-                        url: `/schedule/${eventId}`,
-                        data: {
-                            start_date: newStartDateUTC,
-                            end_date: newEndDateUTC,
-                        },
-                        success: function() {
-                            console.log('Event moved successfully.');
-                        },
-                        error: function(error) {
-                            console.error('Error moving event:', error);
-                        }
-                    });
-                },
+                //     $.ajax({
+                //         method: 'PUT',
+                //         url: `/schedule/${eventId}`,
+                //         data: {
+                //             start_date: newStartDateUTC,
+                //             end_date: newEndDateUTC,
+                //         },
+                //         success: function() {
+                //             console.log('Event moved successfully.');
+                //         },
+                //         error: function(error) {
+                //             console.error('Error moving event:', error);
+                //         }
+                //     });
+                // },
 
-                // Event Resizing
-                eventResize: function(info) {
-                    var eventId = info.event.id;
-                    var newEndDate = info.event.end;
-                    var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
+                // // Event Resizing
+                // eventResize: function(info) {
+                //     var eventId = info.event.id;
+                //     var newEndDate = info.event.end;
+                //     var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
 
-                    $.ajax({
-                        method: 'PUT',
-                        url: `/schedule/${eventId}/resize`,
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            end_date: newEndDateUTC
-                        },
-                        success: function() {
-                            console.log('Event resized successfully.');
-                        },
-                        error: function(error) {
-                            console.error('Error resizing event:', error);
-                        }
-                    });
-                },
+                //     $.ajax({
+                //         method: 'PUT',
+                //         url: `/schedule/${eventId}/resize`,
+                //         headers: {
+                //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //         },
+                //         data: {
+                //             end_date: newEndDateUTC
+                //         },
+                //         success: function() {
+                //             console.log('Event resized successfully.');
+                //         },
+                //         error: function(error) {
+                //             console.error('Error resizing event:', error);
+                //         }
+                //     });
+                // },
             });
 
             calendar.render();
