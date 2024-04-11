@@ -141,23 +141,6 @@ class ProductController extends Controller
         return view('user.calendar', ['events' => json_encode($events)]); // Convert events array to JSON
     }
 
-    // public function create_products(Request $request)
-    // {
-    //     $number = mt_rand(1000000000,9999999999);
-
-    //     if ($this->productCodeExist($number)) {
-    //         $number = mt_rand(1000000000,9999999999);
-    //     }
-
-    //     $request['product_code'] = $number;
-
-    //     Products::create($request->all());
-
-    //     $data = Products::paginate(10); // Paginate with 10 items per page
-
-    //     return view('user.product-information', compact('data'));
-    // }
-
     public function create_products(Request $request)
     {
         $number = mt_rand(1000000000,9999999999);
@@ -186,46 +169,33 @@ class ProductController extends Controller
         return view('user.product-information', compact('data'));
     }
 
-    // public function create_products(Request $request)
-    // {
-    //     $number = mt_rand(1000000000, 9999999999);
-
-    //     if ($this->productCodeExist($number)) {
-    //         $number = mt_rand(1000000000, 9999999999);
-    //     }
-
-    //     $request['product_code'] = $number;
-
-    //     // Create the product
-    //     $product = Products::create($request->all());
-
-    //     // Create directory for barcode images
-    //     $directory = storage_path("app/public/barcodes");
-    //     if (!file_exists($directory)) {
-    //         mkdir($directory, 0777, true);
-    //     }
-
-    //     // Generate barcode image
-    //     $barcodeImage = DNS1D::getBarcodePNGPath("$product->product_code", 'C128');
-
-    //     // Save the barcode image to storage
-    //     $barcodeImagePath = storage_path("app/public/barcodes/{$product->id}.png");
-    //     copy($barcodeImage, $barcodeImagePath);
-
-    //     $data = Products::paginate(10); // Paginate with 10 items per page
-
-    //     return view('user.product-information', compact('data'));
-    // }
-
     public function productCodeExist($number)
     {
         return Products::whereProductCode($number)->exists();
     }
 
+    // public function getEvents()
+    // {
+    //     $schedules = Products::all();
+    //     return response()->json($schedules);
+    // }
+
     public function getEvents()
     {
-        $schedules = Products::all();
-        return response()->json($schedules);
+        $products = Products::all();
+
+        $events = [];
+
+        foreach ($products as $product) {
+            $events[] = [
+                'id' => $product->id,
+                'title' => $product->product_name, // Change 'product_name' to 'title'
+                'start' => $product->expiration_date, // Assuming 'expiration_date' is the field containing the product date
+                // Add other relevant fields as needed
+            ];
+        }
+
+        return response()->json($events);
     }
 
     public function deleteEvent($id)
@@ -262,74 +232,6 @@ class ProductController extends Controller
 
         return response()->json($matchingEvents);
     }
-
-    // without saving the qr code image to public folder
-    // public function create_products(Request $request)
-    // {
-    //     // Validate the request
-    //     $request->validate([
-    //         'product_name' => 'required|string',
-    //         'categories' => 'required|string',
-    //         'quantity' => 'required',
-    //         'expiration_date' => 'required|string',
-    //     ]);
-
-    //     // Create the products before generate qr_code
-    //     $product = Products::create([
-    //         'product_name' => $request->input('product_name'),
-    //         'categories' => $request->input('categories'),
-    //         'quantity' => $request->input('quantity'),
-    //         'expiration_date' => $request->input('expiration_date'),
-    //     ]);
-
-    //     // Generate QR code based on product information
-    //     $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
-    //     $qr_code = QrCode::generate($qr_code_string);
-
-    //     return view('qr-code')->with('qr_code', $qr_code);
-    // }
-
-    // public qrcode folder path
-    // public function create_products(Request $request)
-    // {
-    //     // Validate the request
-    //     $request->validate([
-    //         'product_name' => 'required|string',
-    //         'categories' => 'required|string',
-    //         'quantity' => 'required',
-    //         'expiration_date' => 'required|string',
-    //     ]);
-
-    //     // Create the products before generating the qr_code
-    //     $product = Products::create([
-    //         'product_name' => $request->input('product_name'),
-    //         'categories' => $request->input('categories'),
-    //         'quantity' => $request->input('quantity'),
-    //         'expiration_date' => $request->input('expiration_date'),
-    //     ]);
-
-    //     // Generate QR code based on product information
-    //     // without spacing
-    //     // $qr_code_string = $product->product_name . ' - ' . $product->categories . ' - ' . $product->quantity . ' - ' . $product->expiration_date;
-
-    //     // with spacing new line
-    //     $qr_code_string =
-    //         $product->product_name . PHP_EOL .
-    //         $product->categories . PHP_EOL .
-    //         $product->quantity . PHP_EOL .
-    //         $product->expiration_date;
-
-    //     $qr_code = QrCode::generate($qr_code_string);
-
-    //     // Save the QR code image to storage
-    //     $imagePath = 'qrcodes/' . $product->product_name . '_qr_code.png';
-    //     file_put_contents(public_path($imagePath), base64_decode($qr_code));
-
-    //     // Update the product with the image path
-    //     $product->update(['qr_code_image' => $imagePath]);
-
-    //     return view('user.qr-code')->with('qr_code', $qr_code);
-    // }
 
      // public qrcode folder path
      public function admin_create_products(Request $request)

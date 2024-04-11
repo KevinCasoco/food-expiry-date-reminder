@@ -158,9 +158,9 @@ Route::middleware('auth', 'verified')->group(function () {
     // calendar of products
     Route::get('/calendar', [ProductController::class, 'calendar'])->name('user.calendar');
     Route::get('/events', [ProductController::class, 'getEvents'])->name('user.calendar.getEvents');
-    Route::delete('/schedule/{id}', [ProductController::class, 'deleteEvent'])->name('user.calendar.deleteEvent');
-    Route::put('/schedule/{id}', [ProductController::class, 'update'])->name('user.calendar.update');
-    Route::put('/schedule/{id}/resize', [ProductController::class, 'resize'])->name('user.calendar.resize');
+    Route::delete('/calendar/{id}', [ProductController::class, 'deleteEvent'])->name('user.calendar.deleteEvent');
+    Route::put('/calendar/{id}', [ProductController::class, 'update'])->name('user.calendar.update');
+    Route::put('/calendar/{id}/resize', [ProductController::class, 'resize'])->name('user.calendar.resize');
     Route::get('/events/search', [ProductController::class, 'search'])->name('user.calendar.search');
 
 }); // end of middleware group
