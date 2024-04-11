@@ -166,7 +166,37 @@ class ProductController extends Controller
 
         $data = Products::paginate(10); // Paginate with 10 items per page
 
-        return view('user.product-information', compact('data'));
+        return view('user.calendar', compact('data'));
+    }
+
+    // Add an update method to handle the form submission
+    public function update_products(Request $request, $id)
+    {
+        $data = Products::find($id);
+
+        if (!$data) {
+            return redirect()->route('user.product-information')->with('error', 'Product not found');
+        }
+
+        // Validate the request
+        $request->validate([
+            'product_name' => 'nullable|string',
+            'categories' => 'nullable|string',
+            'quantity' => 'nullable|string',
+            'expiration_date' => 'nullable|string',
+            'status' => 'nullable|string',
+        ]);
+
+        // Update product information
+        $data->update([
+            'product_name' => $request->input('product_name'),
+            'categories' => $request->input('categories'),
+            'quantity' => $request->input('quantity'),
+            'expiration_date' => $request->input('expiration_date'),
+            'status' => $request->input('status'),
+        ]);
+
+        return redirect()->route('user.product-information')->with('message', 'Product updated successfully');
     }
 
     public function productCodeExist($number)
