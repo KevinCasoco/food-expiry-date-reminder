@@ -141,7 +141,9 @@
             <label for="categories" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Categories</label>
             <select id="categories" name="categories" required>
                 <option value="sample">Select Categories</option>
-                <option value="frozen food" name="categories">Frozen Food</option>
+                <option value="frozen food">Frozen Food</option>
+                <option value="snacks">Snacks</option>
+                <option value="biscuits">Biscuits</option>
             </select>
 
 

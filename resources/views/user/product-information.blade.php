@@ -229,7 +229,7 @@
                                         <option value="sample">Select Categories</option>
                                         <option value="frozen food">Frozen Food</option>
                                         <option value="snacks">Snacks</option>
-                                        <option value="biscuits">Buscits</option>
+                                        <option value="biscuits">Biscuits</option>
                                     </select>
 
                                 <label for="quantity" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity</label>
