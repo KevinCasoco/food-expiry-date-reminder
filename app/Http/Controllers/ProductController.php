@@ -169,6 +169,34 @@ class ProductController extends Controller
         return view('user.calendar', compact('data'));
     }
 
+    public function admin_create(Request $request)
+    {
+        $number = mt_rand(1000000000,9999999999);
+
+        if ($this->productCodeExist($number)) {
+            $number = mt_rand(1000000000,9999999999);
+        }
+
+        $request['product_code'] = $number;
+
+        // Create the product
+        $product = Products::create($request->all());
+
+        // Generate barcode HTML
+        $barcodeHTML = DNS1D::getBarcodeHTML("$product->product_code", 'C128');
+
+        // Generate barcode image
+        // $barcodeImage = DNS1D::getBarcodePNGPath("$product->product_code", 'C128');
+
+        // // Save the barcode image to storage
+        // $barcodeImagePath = storage_path("app/public/barcodes/{$product->id}.png");
+        // file_put_contents($barcodeImagePath, file_get_contents($barcodeImage));
+
+        $data = Products::paginate(10); // Paginate with 10 items per page
+
+        return view('admin.admin-product-information', compact('data'));
+    }
+
     // Add an update method to handle the form submission
     public function update_products(Request $request, $id)
     {
@@ -242,6 +270,14 @@ class ProductController extends Controller
         $products->delete();
 
         return redirect()->route('user.product-information')->with('message', 'Admin deleted successfully');
+    }
+
+    public function admin_destroy($id)
+    {
+        $products = Products::findOrFail($id);
+        $products->delete();
+
+        return redirect()->route('admin.admin-product-information')->with('message', 'Admin deleted successfully');
     }
 
     public function resize(Request $request, $id)

@@ -107,10 +107,12 @@ Route::middleware('auth', 'verified')->group(function () {
 
     // add new products
     Route::get('/admin-products', [ProductController::class, 'admin_new_products'])->name('admin.admin-add-products');
-    Route::post('/admin/create_products', [ProductController::class, 'admin_create_products'])->name('admin.admin_new_products');
+    Route::post('/admin/create_products', [ProductController::class, 'admin_create'])->name('admin.admin_create');
 
     // product list
     Route::get('/admin-list-of-products', [ProductController::class, 'admin_product_list'])->name('admin.admin-product-information');
+
+    Route::delete('/admin/products/{id}', [ProductController::class, 'admin_destroy'])->name('admin.admin-product-information.admin_destroy');
 
     // // admin list
     // Route::get('/admin-list', [AdminController::class, 'admin_list'])->name('admin.admin-list');
