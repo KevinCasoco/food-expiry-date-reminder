@@ -312,7 +312,7 @@
                     @foreach ($data as $products)
                         <div x-show="itemToEdit.toString() === '{{ $products->id }}'">
                             <form method="post"
-                                :action="`{{ route('user.product-information.update_products', '') }}/${itemToEdit}`"
+                                :action="`{{ route('admin.admin-product-information.admin_update', '') }}/${itemToEdit}`"
                                 class="pl-5 pr-5 pt-2 pb-1">
                                 @csrf
                                 @method('patch')

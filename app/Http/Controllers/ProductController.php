@@ -227,6 +227,36 @@ class ProductController extends Controller
         return redirect()->route('user.product-information')->with('message', 'Product updated successfully');
     }
 
+    // Add an update method to handle the form submission
+    public function admin_update(Request $request, $id)
+    {
+        $data = Products::find($id);
+
+        if (!$data) {
+            return redirect()->route('admin.admin-product-information')->with('error', 'Product not found');
+        }
+
+        // Validate the request
+        $request->validate([
+            'product_name' => 'nullable|string',
+            'categories' => 'nullable|string',
+            'quantity' => 'nullable|string',
+            'expiration_date' => 'nullable|string',
+            'status' => 'nullable|string',
+        ]);
+
+        // Update product information
+        $data->update([
+            'product_name' => $request->input('product_name'),
+            'categories' => $request->input('categories'),
+            'quantity' => $request->input('quantity'),
+            'expiration_date' => $request->input('expiration_date'),
+            'status' => $request->input('status'),
+        ]);
+
+        return redirect()->route('admin.admin-product-information')->with('message', 'Product updated successfully');
+    }
+
     public function productCodeExist($number)
     {
         return Products::whereProductCode($number)->exists();

@@ -114,6 +114,8 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::delete('/admin/products/{id}', [ProductController::class, 'admin_destroy'])->name('admin.admin-product-information.admin_destroy');
 
+    Route::patch('/admin_update/products/update/{id}', [ProductController::class, 'admin_update'])->name('admin.admin-product-information.admin_update');
+
     // // admin list
     // Route::get('/admin-list', [AdminController::class, 'admin_list'])->name('admin.admin-list');
 
