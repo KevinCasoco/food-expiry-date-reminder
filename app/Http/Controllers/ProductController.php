@@ -56,6 +56,15 @@ class ProductController extends Controller
         return view('admin.admin-product-information', compact('data'));
     }
 
+    public function admin_user_list()
+    {
+        // $data = Products::all();
+
+        $data = Products::paginate(10); // Paginate with 10 items per page
+
+        return view('admin.admin-user-list', compact('data'));
+    }
+
     public function consumed_products()
     {
         $data = Products::paginate(10); // Paginate with 10 items per page
