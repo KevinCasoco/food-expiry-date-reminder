@@ -321,11 +321,11 @@
                 x-transition:leave-end="opacity-0 transform scale-95"
                 class="rounded-lg overflow-hidden transform transition-all flex justify-start">
                 <!-- ... (modal content) ... -->
-                <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[570px]">
+                <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[450px]">
                     <div class="flex items-center justify-between">
                         <h3
                             class="text-xl font-semibold text-gray-900 dark:text-white w-full pt-2 pb-3 ml-5">
-                            Edit Product Information
+                            Edit User Information
                         </h3>
                         <button @click="adminEdit = false" aria-label="Close"
                             class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
@@ -340,63 +340,54 @@
                     @foreach ($data as $products)
                         <div x-show="itemToEdit.toString() === '{{ $products->id }}'">
                             <form method="post"
-                                :action="`{{ route('admin.admin-product-information.admin_update', '') }}/${itemToEdit}`"
+                                :action="`{{ route('admin.admin-user-list.admin_user_update', '') }}/${itemToEdit}`"
                                 class="pl-5 pr-5 pt-2 pb-1">
                                 @csrf
                                 @method('patch')
-                                {{-- <label for="id"
-                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">ID:</label>
-                                <input type="number" name="id" value="{{ $products->id }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mb-2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white  w-full sm:w-[300px]"
-                                    disabled> --}}
-
-                                <label for="barcode_id"
-                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Barcode ID:</label>
-                                <input type="number" name="id" value="{{ $products->product_code }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mb-2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white  w-full sm:w-[300px]"
-                                    disabled>
 
                                 <label for="first_name"
-                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Product
+                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">First
                                     Name:</label>
                                 <input type="text" name="product_name"
-                                    value="{{ $products->product_name }}"
+                                    value="{{ $products->first_name }}"
                                     oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-full sm:w-[300px]"
                                     required>
 
-                                    <label for="categories" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Categories:</label>
-                                    <select name="categories"
+                                    <label for="last_name"
+                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Last
+                                    Name:</label>
+                                <input type="text" name="last_name"
+                                    value="{{ $products->last_name }}"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-full sm:w-[300px]"
+                                    required>
+
+                                    <label for="middle_name"
+                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Middle
+                                    Name:</label>
+                                <input type="text" name="middle_name"
+                                    value="{{ $products->middle_name }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-full sm:w-[300px]"
+                                    required>
+
+                                    <label for="first_name"
+                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Email
+                                    </label>
+                                <input type="text" name="email"
+                                    value="{{ $products->email }}"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-full sm:w-[300px]"
+                                    required>
+
+                                    <label for="role" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Role:</label>
+                                    <select name="role"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mb-3 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white sm:w-full w-[300px]">
-                                        <option value="frozen food" {{ $products->categories === 'frozen_food' ? 'selected' : '' }}>Frozen Food</option>
-                                        <option value="snacks" {{ $products->categories === 'snacks' ? 'selected' : '' }}>Snacks</option>
-                                        <option value="biscuits" {{ $products->categories === 'biscuits' ? 'selected' : '' }}>Biscuits</option>
+                                        <option value="frozen food" {{ $products->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                        <option value="snacks" {{ $products->role === 'consumer' ? 'selected' : '' }}>Consumer</option>
                                     </select>
 
 
-                                <label for="quantity"
-                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity
-                                </label>
-                                <input type="number" name="quantity"
-                                    value="{{ $products->quantity }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]"
-                                    required>
-
-                                    <label for="status"
-                                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Expiration Date
-                                                    </label>
-                                                <input type="date"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mb-2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px]"
-                                                    id="expiration_date" name="expiration_date" value="{{ $products->expiration_date }}"
-                                                    required>
-
-                                                    <label for="status" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Status:</label>
-                                                    <select name="status"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mb-3 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white sm:w-full w-[300px]">
-                                                        <option value="available" {{ $products->status === 'available' ? 'selected' : '' }}>Available</option>
-                                                        <option value="consumed" {{ $products->status === 'consumed' ? 'selected' : '' }}>Consumed</option>
-                                                        <option value="expired" {{ $products->status === 'expired' ? 'selected' : '' }}>Expired</option>
-                                                    </select>
 
 
 

@@ -125,6 +125,35 @@ class ProductController extends Controller
         return response()->json($schedule);
     }
 
+    public function admin_user_update(Request $request, $id)
+    {
+        $data = Products::find($id);
+
+        if (!$data) {
+            return redirect()->route('admin.admin-user-list')->with('error', 'Product not found');
+        }
+
+        // Validate the request
+        $request->validate([
+            'first_name' => 'nullable|string',
+            'last_name' => 'nullable|string',
+            'middle_name' => 'nullable|string',
+            'email' => 'nullable|email|unique:users,email,' . $data->id,
+            'role' => 'nullable|string',
+        ]);
+
+        // Update product information
+        $data->update([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'middle_name' => $request->input('middle_name'),
+            'email' => $request->input('email'),
+            'role' => $request->input('role'),
+        ]);
+
+        return redirect()->route('admin.admin-user-list')->with('message', 'Product updated successfully');
+    }
+
     public function schedule()
     {
         $events = array();
