@@ -1,6 +1,9 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
+        <a href="{{ asset('/') }}" >
+            <img src="{{asset('/images/fera-logo.png')}}" alt="" class="mb-2 w-24 h-24 rounded object-cover ml-auto mr-auto">
+        </a>
 
         <!-- Password Reset Token -->
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
