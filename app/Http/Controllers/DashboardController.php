@@ -16,9 +16,18 @@ class DashboardController extends Controller
             $countConsumer = User::where('role', 'consumer')->count();
             $countExpired = Products::where('status', 'expired')->count();
             $countConsumed = Products::where('status', 'consumed')->count();
+            $countAvailable = Products::where('status', 'available')->count();
+            // without quantities
+            // $countSnacksCategory = Products::where('categories', 'snacks')->count();
+            // $countBiscuitsCategory = Products::where('categories', 'biscuits')->count();
+            // $countFrozenCategory = Products::where('categories', 'frozen food')->count();
+            // total quantities
+            $countSnacksCategory = Products::where('categories', 'snacks')->sum('quantity');
+            $countBiscuitsCategory = Products::where('categories', 'biscuits')->sum('quantity');
+            $countFrozenCategory = Products::where('categories', 'frozen food')->sum('quantity');
             $countProducts = Products::count();
             $totalUser = User::count();
 
-        return view('dashboard', compact('chart', 'countAdmins', 'countExpired', 'countConsumed', 'countProducts', 'countConsumer', 'totalUser'));
+        return view('dashboard', compact('chart', 'countAdmins', 'countExpired', 'countAvailable', 'countConsumed', 'countProducts', 'countConsumer', 'totalUser', 'countSnacksCategory', 'countBiscuitsCategory', 'countFrozenCategory'));
     }
 }

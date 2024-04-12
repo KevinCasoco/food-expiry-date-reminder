@@ -228,6 +228,8 @@
                                     <select name="categories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px] mb-2" required>
                                         <option value="sample">Select Categories</option>
                                         <option value="frozen food">Frozen Food</option>
+                                        <option value="snacks">Snacks</option>
+                                        <option value="biscuits">Buscits</option>
                                     </select>
 
                                 <label for="quantity" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity</label>
@@ -324,7 +326,7 @@
                 x-transition:leave-end="opacity-0 transform scale-95"
                 class="rounded-lg overflow-hidden transform transition-all flex justify-start">
                 <!-- ... (modal content) ... -->
-                <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[550px]">
+                <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[570px]">
                     <div class="flex items-center justify-between">
                         <h3
                             class="text-xl font-semibold text-gray-900 dark:text-white w-full pt-2 pb-3 ml-5">
@@ -371,7 +373,7 @@
                                     <label for="categories" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Categories:</label>
                                     <select name="categories"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mb-3 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white sm:w-full w-[300px]">
-                                        <option value="frozen_food" {{ $products->categories === 'frozen_food' ? 'selected' : '' }}>Frozen Food</option>
+                                        <option value="frozen food" {{ $products->categories === 'frozen_food' ? 'selected' : '' }}>Frozen Food</option>
                                         <option value="snacks" {{ $products->categories === 'snacks' ? 'selected' : '' }}>Snacks</option>
                                         <option value="biscuits" {{ $products->categories === 'biscuits' ? 'selected' : '' }}>Biscuits</option>
                                     </select>
