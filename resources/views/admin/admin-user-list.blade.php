@@ -283,10 +283,10 @@
                                 d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure
-                            you want to delete this product?</h3>
+                            you want to delete this user?</h3>
                         <div class="flex justify-end items-end pb-2">
                             <form method="post"
-                                :action="`{{ route('admin.admin-product-information.admin_destroy', '') }}/${itemToDelete}`">
+                                :action="`{{ route('admin.admin-user-list.admin_user_destroy', '') }}/${itemToDelete}`">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"

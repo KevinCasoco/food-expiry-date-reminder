@@ -319,6 +319,14 @@ class ProductController extends Controller
         return redirect()->route('admin.admin-product-information')->with('message', 'Admin deleted successfully');
     }
 
+    public function admin_user_destroy($id)
+    {
+        $products = User::findOrFail($id);
+        $products->delete();
+
+        return redirect()->route('admin.admin-user-list')->with('message', 'Admin deleted successfully');
+    }
+
     public function resize(Request $request, $id)
     {
         $schedule = Products::findOrFail($id);
