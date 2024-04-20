@@ -209,9 +209,9 @@
                                     {{$countBiscuitsCategory}},
                                     {{$countFrozenCategory}}],
                             backgroundColor: [
-                                '#059BFF',
                                 '#FF4069',
-                                '#FF9020',
+                                '#FF4069',
+                                '#FF4069',
                             ],
                             borderColor: [
                                 'rgb(255, 99, 132)',
@@ -520,8 +520,8 @@
                                     {{$countBiscuitsCategory}},
                                     {{$countFrozenCategory}}],
                             backgroundColor: [
-                                '#059BFF',
-                                '#FF4069',
+                                '#FF9020',
+                                '#FF9020',
                                 '#FF9020',
                             ],
                             borderColor: [

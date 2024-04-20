@@ -22,9 +22,9 @@ class DashboardController extends Controller
             // $countBiscuitsCategory = Products::where('categories', 'biscuits')->count();
             // $countFrozenCategory = Products::where('categories', 'frozen food')->count();
             // total quantities
-            $countSnacksCategory = Products::where('categories', 'snacks')->sum('quantity');
-            $countBiscuitsCategory = Products::where('categories', 'biscuits')->sum('quantity');
-            $countFrozenCategory = Products::where('categories', 'frozen food')->sum('quantity');
+            $countSnacksCategory = Products::where('categories', 'snacks')->count();
+            $countBiscuitsCategory = Products::where('categories', 'biscuits')->count();
+            $countFrozenCategory = Products::where('categories', 'frozen food')->count();
             $countProducts = Products::count();
             $totalUser = User::count();
 
