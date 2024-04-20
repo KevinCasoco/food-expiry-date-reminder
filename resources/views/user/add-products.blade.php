@@ -141,12 +141,14 @@
             <label for="categories" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Categories</label>
             <select id="categories" name="categories" required>
                 <option value="sample">Select Categories</option>
-                <option value="frozen food" name="categories">Frozen Food</option>
+                <option value="frozen food">Frozen Food</option>
+                <option value="snacks">Snacks</option>
+                <option value="biscuits">Biscuits</option>
             </select>
 
 
-            <label for="quantity" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity</label>
-            <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" id="quantity" name="quantity" required>
+            {{-- <label for="quantity" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity</label>
+            <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" id="quantity" name="quantity" required> --}}
 
             <label for="expiration_date" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Expiration Date:</label>
             <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" id="expiration_date" name="expiration_date" required>
@@ -154,7 +156,7 @@
             <label for="status" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Status:</label>
                                 <select name="status" required>
                                     <option value="">Select Status</option>
-                                    <option value="available">Available</option>
+                                    <option value="available" selected>Available</option>
                                     <option value="consumed">Consumed</option>
                                     <option value="expired">Expired</option>
                                 </select>

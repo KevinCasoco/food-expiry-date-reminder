@@ -107,10 +107,18 @@ Route::middleware('auth', 'verified')->group(function () {
 
     // add new products
     Route::get('/admin-products', [ProductController::class, 'admin_new_products'])->name('admin.admin-add-products');
-    Route::post('/admin/create_products', [ProductController::class, 'admin_create_products'])->name('admin.admin_new_products');
+    Route::post('/admin/create_products', [ProductController::class, 'admin_create'])->name('admin.admin_create');
 
     // product list
     Route::get('/admin-list-of-products', [ProductController::class, 'admin_product_list'])->name('admin.admin-product-information');
+
+    Route::delete('/admin/products/{id}', [ProductController::class, 'admin_destroy'])->name('admin.admin-product-information.admin_destroy');
+
+    Route::delete('/admin/user/{id}', [ProductController::class, 'admin_user_destroy'])->name('admin.admin-user-list.admin_user_destroy');
+
+    Route::patch('/admin_user_update/products/update/{id}', [ProductController::class, 'admin_user_update'])->name('admin.admin-user-list.admin_user_update');
+
+    Route::patch('/admin_update/products/update/{id}', [ProductController::class, 'admin_update'])->name('admin.admin-product-information.admin_update');
 
     // // admin list
     // Route::get('/admin-list', [AdminController::class, 'admin_list'])->name('admin.admin-list');
@@ -140,6 +148,9 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/list-of-products', [ProductController::class, 'product_list'])->name('user.product-information');
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('user.product-information.destroy');
 
+    // update product info
+    Route::patch('/products/update/{id}', [ProductController::class, 'update_products'])->name('user.product-information.update_products');
+
     // qr code scanner
     Route::get('/qr-code-scanner', [QrCodeScannerController::class, 'qr_code_scanner'])->name('user.qr-code-scanner');
 
@@ -158,9 +169,9 @@ Route::middleware('auth', 'verified')->group(function () {
     // calendar of products
     Route::get('/calendar', [ProductController::class, 'calendar'])->name('user.calendar');
     Route::get('/events', [ProductController::class, 'getEvents'])->name('user.calendar.getEvents');
-    Route::delete('/schedule/{id}', [ProductController::class, 'deleteEvent'])->name('user.calendar.deleteEvent');
-    Route::put('/schedule/{id}', [ProductController::class, 'update'])->name('user.calendar.update');
-    Route::put('/schedule/{id}/resize', [ProductController::class, 'resize'])->name('user.calendar.resize');
+    Route::delete('/calendar/{id}', [ProductController::class, 'deleteEvent'])->name('user.calendar.deleteEvent');
+    Route::put('/calendar/{id}', [ProductController::class, 'update'])->name('user.calendar.update');
+    Route::put('/calendar/{id}/resize', [ProductController::class, 'resize'])->name('user.calendar.resize');
     Route::get('/events/search', [ProductController::class, 'search'])->name('user.calendar.search');
 
 }); // end of middleware group

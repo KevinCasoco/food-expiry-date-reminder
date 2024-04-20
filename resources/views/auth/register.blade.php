@@ -1,6 +1,9 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
+        <a href="{{ asset('/') }}" >
+            <img src="{{asset('/images/fera-logo.png')}}" alt="" class="mb-2 w-24 h-24 rounded object-cover ml-auto mr-auto">
+        </a>
 
         <!-- Full Name -->
         <div class="mt-4">

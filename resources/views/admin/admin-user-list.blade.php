@@ -131,47 +131,292 @@
         </div>
 
    <!-- content -->
-   <div class="flex-grow text-gray-800">
+ <div class="flex-grow text-gray-800">
     <main class="p-3 sm:p-4 space-y-5">
       <!-- Start Table -->
 <div id='recipients' class="p-4 m-1 lg:mt-0 rounded shadow-lg bg-white overflow-x-auto">
     <div class="mb-4 flex sm:justify-center md:justify-start lg:justify-start">
-                <h2 class="text-2xl font-bold">USERS TABLE</h2>
+                <h2 class="text-2xl font-bold">LIST OF USERS</h2>
             </div>
-                    <table id="example" class="stripe hover display dataTable " style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+
+            <div x-data="{ adminDelete: false, adminEdit: false, adminNewUsers: false, itemToDelete: null, itemToEdit: null}">
+                <div class="flex flex-col mb-2 sm:justify-end md:flex-row md:justify-end items-center lg:justify-end">
+                {{-- <button @click="adminNewUsers = true" class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm  px-14 py-2.5 md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 mb-2 md:mb-0"><i class="ri-add-circle-line mr-1"></i>Add New Products</button> --}}
+                <div class="md:flex-shrink-0 mt-[47px]">
+
+                </div>
+            </div>
+
+            <table id="example" class="stripe hover display dataTable " style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                         <thead>
                             <tr>
                                 <th data-priority="1">ID</th>
-                                <th data-priority="2">First Name</th>
-                                <th data-priority="3">Middle Name</th>
+                                <th data-priority="3">First Name</th>
                                 <th data-priority="4">Last Name</th>
-                                <th data-priority="5">Email</th>
-                                <th data-priority="6">Role</th>
-                                <th data-priority="7">Action</th>
+                                <th data-priority="5">Middle Name</th>
+                                <th data-priority="6">Email</th>
+                                <th data-priority="7">Role</th>
+                                <th data-priority="8">Edit</th>
+                                <th data-priority="9">Delete</th>
                             </tr>
                         </thead>
 
                         <tbody>
 
-                            @foreach($data as $user)
-                            {{-- <tr x-on:click="itemToEdit = {{ $item->id }};"> --}}
+                            @foreach($data as $products)
                             <tr>
-                                <td >{{ $user->id }}</td>
-                                <td >{{ $user->first_name }}</td>
-                                <td >{{ $user->middle_name }}</td>
-                                <td >{{ $user->last_name }}</td>
-                                <td >{{ $user->email }}</td>
-                                <td >{{ $user->role }}</td>
-                                <td >{{ $user->status }}</td>
+                                <td >{{ $products->id }}</td>
+                                <td >{{ $products->first_name }}</td>
+                                <td >{{ $products->last_name }}</td>
+                                <td >{{ $products->middle_name }}</td>
+                                <td >{{ $products->email }}</td>
+                                <td >{{ $products->role }}</td>
+                                <td class="text-center ">
+                                    <button
+                                        @click="adminEdit = true; itemToEdit = $event.target.getAttribute('data-item-id')"
+                                        data-item-id="{{ $products->id }}"
+                                        class="py-1 px-4 rounded bg-sky-500 hover:bg-sky-700 text-white">
+                                        <i class="ri-edit-box-fill mr-1"></i>Edit
+                                    </button>
+                                </td>
+                                <td class="text-center ">
+                                    <button
+                                        @click="adminDelete = true; itemToDelete = $event.target.getAttribute('data-item-id')"
+                                        data-item-id="{{ $products->id }}"
+                                        class="py-1 px-4 rounded bg-red-500 hover:bg-red-700 text-white">
+                                        <i class="ri-delete-bin-5-fill mr-1"></i>Delete
+                                    </button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
 
+                     <!-- Add New Users Modal -->
+                 <div x-show="adminNewUsers" class="fixed inset-0 overflow-y-auto flex items-center justify-center z-30" x-cloak>
+                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                    </div>
+
+                    <div x-show="adminNewUsers" @click.away="adminNewUsers = false"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 transform scale-95"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100 transform scale-100"
+                        x-transition:leave-end="opacity-0 transform scale-95"
+                        class="bg-white rounded-lg overflow-hidden transform transition-all flex justify-start">
+                        <!-- ... (modal content) ... -->
+                        <div class="bg-white py-3 w-full sm:w-[340px] h-full sm:h-[480px]">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white w-full pb-3 ml-5">
+                                    Add New Products
+                                </h3>
+                            </div>
+                            <hr class="bg-black border-gray-300 w-full">
+                            <form action="{{ route('admin.admin_create') }}" method="post" class="pl-5 pr-5 pt-3 pb-3">
+                                @csrf
+                                <label for="product_name" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Product Name:</label>
+                                <input type="text" name="product_name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
+
+                                <label for="categories" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Categories:</label>
+                                    <select name="categories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px] mb-2" required>
+                                        <option value="sample">Select Categories</option>
+                                        <option value="frozen food">Frozen Food</option>
+                                        <option value="snacks">Snacks</option>
+                                        <option value="biscuits">Biscuits</option>
+                                    </select>
+
+                                <label for="quantity" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity</label>
+                                <input type="number" name="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
+
+                                <label for="expiration_date" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Expiration Date:</label>
+                                <input type="date" name="expiration_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
+
+                                <label for="status" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Status:</label>
+                                <select name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px] mb-2" required>
+                                    <option value="">Select Status</option>
+                                    <option value="available">Available</option>
+                                    <option value="consumed">Consumed</option>
+                                    <option value="expired">Expired</option>
+                                </select>
+
+                            <div class="flex justify-end mt-3">
+                                <button type="submit"
+                                        class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Create
+                                </button>
+                            </form>
+                            <div class="absolute mr-[90px]">
+                            <button @click="adminNewUsers = false"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                Cancel
+                            </button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delete Modal -->
+                <div x-show="adminDelete"
+                class="fixed inset-0 overflow-y-auto flex items-center justify-center z-30" x-cloak>
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+
+                <div x-show="adminDelete" @click.away="adminDelete = false"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform scale-95"
+                    x-transition:enter-end="opacity-100 transform scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 transform scale-100"
+                    x-transition:leave-end="opacity-0 transform scale-95"
+                    class="bg-white rounded-lg overflow-hidden transform transition-all flex justify-start">
+                    <!-- ... (modal content) ... -->
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-col">
+                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure
+                            you want to delete this user?</h3>
+                        <div class="flex justify-end items-end pb-2">
+                            <form method="post"
+                                :action="`{{ route('admin.admin-user-list.admin_user_destroy', '') }}/${itemToDelete}`">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Delete
+                                </button>
+                            </form>
+                            <div class="absolute mr-[90px]">
+                                <button @click="adminDelete = false"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div x-show="adminEdit"
+            class="fixed inset-0 overflow-y-auto flex items-center justify-center z-30" x-cloak>
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <div x-show="adminEdit" @click.away="adminEdit = false"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-95"
+                class="rounded-lg overflow-hidden transform transition-all flex justify-start">
+                <!-- ... (modal content) ... -->
+                <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[450px]">
+                    <div class="flex items-center justify-between">
+                        <h3
+                            class="text-xl font-semibold text-gray-900 dark:text-white w-full pt-2 pb-3 ml-5">
+                            Edit User Information
+                        </h3>
+                        <button @click="adminEdit = false" aria-label="Close"
+                            class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
+                            <svg class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <hr class="bg-black border-gray-300 w-full">
+                    @foreach ($data as $products)
+                        <div x-show="itemToEdit.toString() === '{{ $products->id }}'">
+                            <form method="post"
+                                :action="`{{ route('admin.admin-user-list.admin_user_update', '') }}/${itemToEdit}`"
+                                class="pl-5 pr-5 pt-2 pb-1">
+                                @csrf
+                                @method('patch')
+
+                                <label for="first_name"
+                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">First
+                                    Name:</label>
+                                <input type="text" name="product_name"
+                                    value="{{ $products->first_name }}"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-full sm:w-[300px]"
+                                    required>
+
+                                    <label for="last_name"
+                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Last
+                                    Name:</label>
+                                <input type="text" name="last_name"
+                                    value="{{ $products->last_name }}"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-full sm:w-[300px]"
+                                    required>
+
+                                    <label for="middle_name"
+                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Middle
+                                    Name:</label>
+                                <input type="text" name="middle_name"
+                                    value="{{ $products->middle_name }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-full sm:w-[300px]"
+                                    required>
+
+                                    <label for="first_name"
+                                    class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Email
+                                    </label>
+                                <input type="text" name="email"
+                                    value="{{ $products->email }}"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-full sm:w-[300px]"
+                                    required>
+
+                                    <label for="role" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Role:</label>
+                                    <select name="role"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mb-3 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white sm:w-full w-[300px]">
+                                        <option value="frozen food" {{ $products->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                        <option value="snacks" {{ $products->role === 'consumer' ? 'selected' : '' }}>Consumer</option>
+                                    </select>
+
+
+
+
+
+                                <div class="flex justify-end items-end pt-1">
+                                    <button type="submit"
+                                        class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                        Update
+                                    </button>
+                                    <div class="md:hidden absolute mr-[93px]">
+                                        <button @click.prevent="adminEdit = false"
+                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+     {{-- Alphine --}}
+     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
         <script>
             $(document).ready(function() {
                 var empDataTable = $('#example').DataTable({
@@ -237,20 +482,33 @@
                 });
             });
         </script>
-    </div>
 
     <script>
         // grab everything we need
-    const btn = document.querySelector(".mobile-menu-button");
-    const sidebar = document.querySelector(".sidebar");
-    let isSidebarOpen = false;
+        const btn = document.querySelector(".mobile-menu-button");
+        const sidebar = document.querySelector(".sidebar");
+        let isSidebarOpen = false;
 
-    // add our event listener for the click
-    btn.addEventListener("click", () => {
-      sidebar.classList.toggle("-translate-x-full");
-    });
+        // add our event listener for the click
+        btn.addEventListener("click", () => {
+        sidebar.classList.toggle("-translate-x-full");
+        });
+    </script>
 
+    <script>
+        function deleteItem(itemId) {
+            // Set the itemToDelete value based on the clicked item's ID
+            this.itemToDelete = itemId;
+        }
+    </script>
 
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            Alpine.data('yourComponentName', () => ({
+                collectorEdit: false,
+                itemToEdit: null, // Variable to store the selected item
+            }));
+        });
     </script>
     @endif
 </x-app-layout>

@@ -10,6 +10,10 @@
                     </a>
                 </div>
 
+                <a href="{{ asset('/') }}" >
+                    <img src="{{asset('/images/fera-logo.png')}}" alt="" class="mb-2 w-12 h-12 rounded object-cover ml-auto mr-auto">
+                </a>
+
                 <span class="text-lg font-extrabold text-black ml-2">Food Expiry Date Reminder</span>
 
                 <!-- Navigation Links -->

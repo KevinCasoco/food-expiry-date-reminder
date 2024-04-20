@@ -159,6 +159,12 @@
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
+        <!-- Include jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Include Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
         <script type="text/javascript">
             $.ajaxSetup({
                 headers: {
@@ -179,91 +185,40 @@
                 events: '/events',
                 editable: true,
 
-                // Deleting The Event
                 eventContent: function(info) {
-                    var product_name = info.event.extendedProps.product_name; // Assuming the address is stored within the location property
+                var product_name = info.event.title; // Access title directly from info.event
 
-                    var eventElement = document.createElement('div');
-                    eventElement.innerHTML = '<span style="cursor: pointer;">❌</span> ' + product_name;
+                var eventElement = document.createElement('div');
+                eventElement.innerHTML = '<span style="cursor: pointer;">❌</span> ' + product_name;
 
-                    eventElement.querySelector('span').addEventListener('click', function() {
-                        // Trigger Bootstrap modal for confirmation
-                        $('#deleteEventModal').modal('show');
-                        // Handle deletion when confirmed
-                        $('#confirmDeleteEvent').on('click', function() {
-                            var eventId = info.event.id;
-                            $.ajax({
-                                method: 'DELETE',
-                                url: '/schedule/' + eventId,
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: function(response) {
-                                    console.log('Event deleted successfully.');
-                                    calendar.refetchEvents(); // Refresh events after deletion
-                                    $('#deleteEventModal').modal('hide'); // Hide modal after deletion
-                                },
-                                error: function(error) {
-                                    console.error('Error deleting event:', error);
-                                    $('#deleteEventModal').modal('hide'); // Hide modal if deletion fails
-                                }
-                            });
+                eventElement.querySelector('span').addEventListener('click', function() {
+                    // Trigger Bootstrap modal for confirmation
+                    $('#deleteEventModal').modal('show');
+                    // Handle deletion when confirmed
+                    $('#confirmDeleteEvent').on('click', function() {
+                        var eventId = info.event.id;
+                        $.ajax({
+                            method: 'DELETE',
+                            url: '/calendar/' + eventId,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(response) {
+                                console.log('Event deleted successfully.');
+                                calendar.refetchEvents(); // Refresh events after deletion
+                                $('#deleteEventModal').modal('hide'); // Hide modal after deletion
+                            },
+                            error: function(error) {
+                                console.error('Error deleting event:', error);
+                                $('#deleteEventModal').modal('hide'); // Hide modal if deletion fails
+                            }
                         });
                     });
+                });
 
-                    return {
-                        domNodes: [eventElement]
-                    };
-                },
+                return { domNodes: [eventElement] };
+            },
 
-                // Drag And Drop
-
-                // eventDrop: function(info) {
-                //     var eventId = info.event.id;
-                //     var newStartDate = info.event.start;
-                //     var newEndDate = info.event.end || newStartDate;
-                //     var newStartDateUTC = newStartDate.toISOString().slice(0, 10);
-                //     var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
-
-                //     $.ajax({
-                //         method: 'PUT',
-                //         url: `/schedule/${eventId}`,
-                //         data: {
-                //             start_date: newStartDateUTC,
-                //             end_date: newEndDateUTC,
-                //         },
-                //         success: function() {
-                //             console.log('Event moved successfully.');
-                //         },
-                //         error: function(error) {
-                //             console.error('Error moving event:', error);
-                //         }
-                //     });
-                // },
-
-                // // Event Resizing
-                // eventResize: function(info) {
-                //     var eventId = info.event.id;
-                //     var newEndDate = info.event.end;
-                //     var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
-
-                //     $.ajax({
-                //         method: 'PUT',
-                //         url: `/schedule/${eventId}/resize`,
-                //         headers: {
-                //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                //         },
-                //         data: {
-                //             end_date: newEndDateUTC
-                //         },
-                //         success: function() {
-                //             console.log('Event resized successfully.');
-                //         },
-                //         error: function(error) {
-                //             console.error('Error resizing event:', error);
-                //         }
-                //     });
-                // },
             });
 
             calendar.render();
@@ -287,47 +242,6 @@
                     }
                 });
             }
-
-
-                // export excel file
-                document.getElementById('exportButton').addEventListener('click', function() {
-                    var events = calendar.getEvents().map(function(event) {
-                        return {
-                            id: event.id,
-                            location: event.extendedProps.location,
-                            start: event.start ? formatDate(event.start) : null,
-                            time: event.extendedProps.time,
-                        };
-                    });
-
-                    var wb = XLSX.utils.book_new();
-
-                    var ws = XLSX.utils.json_to_sheet(events , { origin: 'A2' });
-
-                    // Add a title header at the top with styling
-                    var titleHeader = [['Waste Collection Schedule']];
-                    XLSX.utils.sheet_add_aoa(ws, titleHeader, {
-                        origin: { r: 0, c: 0 },
-                        style: { font: { bold: true, size: 16 } } // Example styling - adjust as needed
-                    });
-
-                    XLSX.utils.book_append_sheet(wb, ws, 'Waste Collection Schedule');
-
-                    var arrayBuffer = XLSX.write(wb, {
-                        bookType: 'xlsx',
-                        type: 'array'
-                    });
-
-                    var blob = new Blob([arrayBuffer], {
-                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                    });
-
-                    var downloadLink = document.createElement('a');
-                    downloadLink.href = URL.createObjectURL(blob);
-                    downloadLink.download = 'waste-collection-schedule.xlsx';
-                    downloadLink.click();
-                });
-
                 function formatDate(date) {
                     // Extract only the date part from the ISO string
                     return date ? date.toISOString().split('T')[0] : null;

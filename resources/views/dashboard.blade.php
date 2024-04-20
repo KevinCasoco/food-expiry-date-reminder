@@ -167,7 +167,7 @@
                                   <div class="w-3/5 flex justify-start">
                                       <ul>
                                           <li class="font-bold text-white">Consumed</li>
-                                          <li class="font-extrabold text-white text-xl">{{ $countExpired }}</li>
+                                          <li class="font-extrabold text-white text-xl">{{ $countConsumed }}</li>
                                           <i class="ri-calendar-2-fill text-lg text-white"></i>
                                       </ul>
                                   </div>
@@ -178,7 +178,7 @@
                                       <div class="w-3/5 flex justify-start">
                                           <ul>
                                               <li class="font-bold text-white">Expired</li>
-                                              <li class="font-extrabold text-white text-xl">{{ $countConsumed }}</li>
+                                              <li class="font-extrabold text-white text-xl">{{ $countExpired }}</li>
                                               <i class="ri-pass-expired-fill mr-3 text-lg text-white"></i>
                                           </ul>
                                       </div>
@@ -189,9 +189,10 @@
 <section class="grid md:grid-cols-2 xl:grid-cols-4 xl:grid-rows-3 xl:grid-flow-col gap-6">
     <div class="flex flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg">
         <div class="p-4 flex-grow">
-            <div class="w-[100%] h-[100%] flex justify-center items-center">
-                <canvas id="myBarChart"></canvas>
-            </div>
+            <h2 class="text-xl font-semibold text-center">List of Products</h2>
+                                <div class="w-[100%] h-[100%] flex justify-center items-center">
+                                    <canvas id="myBarChart"></canvas>
+                                </div>
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -201,25 +202,21 @@
                 new Chart(barchart, {
                     type: 'bar',
                     data: {
-                        labels: ['Hotdog', 'Ham', 'Bread', 'Fruits', 'Meat'],
+                        labels: ['Snacks', 'Biscuits', 'Frozen Food'],
                         datasets: [{
                             label: 'Products',
-                            data: [100, 50, 80, 30, 120, 70], // Static values here
+                            data: [{{ $countSnacksCategory}},
+                                    {{$countBiscuitsCategory}},
+                                    {{$countFrozenCategory}}],
                             backgroundColor: [
-                                'rgb(255, 99, 132)',
-                                // 'rgb(173, 216, 230)',
-                                // 'rgb(255, 159, 64)',
-                                // 'rgb(255, 182, 193)',
-                                // 'rgb(255, 205, 86)',
-                                // 'rgb(255, 222, 173)'
+                                '#059BFF',
+                                '#FF4069',
+                                '#FF9020',
                             ],
                             borderColor: [
                                 'rgb(255, 99, 132)',
                                 'rgb(173, 216, 230)',
                                 'rgb(255, 159, 64)',
-                                'rgb(255, 182, 193)',
-                                'rgb(255, 205, 86)',
-                                'rgb(255, 222, 173)'
                             ],
                             borderWidth: 1
                         }]
@@ -246,44 +243,52 @@
         </div>
     </div>
     <div class="flex items-center flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg">
+        <h2 class="text-xl font-semibold mt-4 text-center">Status of Products</h2>
         <div class="w-[60%] px-6 py-5 font-semibold border-b border-gray-100">
-            <canvas id="myChart"></canvas>
+            <div>
+                <canvas class="flex justify-center items-center" id="myChart"></canvas>
+            </div>
 
-            <script>
-                const ctx = document.getElementById('myChart');
+<script>
+    const ctx = document.getElementById('myChart');
 
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Admin', 'Consumer'],
-                        datasets: [{
-                            label: 'Number of Users',
-                            data: [50, 30, 70], // Static values here
-                            backgroundColor: [
-                                '#059BFF',
-                                '#FF4069',
-                                // '#FF9020',
-                            ],
-                            borderWidth: 1
-                        }]
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Available', 'Consumed', 'Expired'],
+            datasets: [{
+                label: 'Status of Products',
+                data: [
+                    {{ $countAvailable }},
+                    {{ $countConsumed }},
+                    {{ $countExpired }}
+                ],
+                backgroundColor: [
+                    '#059BFF',
+                    '#FF4069',
+                    '#FF9020',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    align: 'center', // Optional: Align the legend items to the center
+                    labels: {
+                        boxWidth: 15, // Optional: Adjust the box width of legend items
+                        padding: 10, // Optional: Add padding between legend items
+                        usePointStyle: true, // Optional: Use point style for legend items
                     },
-                    options: {
-                        plugins: {
-                            legend: {
-                                display: true,
-                                position: 'bottom',
-                                align: 'center',
-                                labels: {
-                                    boxWidth: 15,
-                                    padding: 10,
-                                    usePointStyle: true,
-                                },
-                                maxItems: 3
-                            }
-                        }
-                    }
-                });
-            </script>
+                    maxItems: 3 // Set the maximum number of items to fit in one line
+                }
+            }
+        }
+    });
+</script>
+
         </div>
     </div>
 </section>
@@ -491,13 +496,14 @@
                                   </div>
                     </section>
 
-                    {{-- Chart --}}
+                       {{-- Chart --}}
 <section class="grid md:grid-cols-2 xl:grid-cols-4 xl:grid-rows-3 xl:grid-flow-col gap-6">
     <div class="flex flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg">
         <div class="p-4 flex-grow">
-            <div class="w-[100%] h-[100%] flex justify-center items-center">
-                <canvas id="myBarChart"></canvas>
-            </div>
+            <h2 class="text-xl font-semibold text-center">List of Products</h2>
+                                <div class="w-[100%] h-[100%] flex justify-center items-center">
+                                    <canvas id="myBarChart"></canvas>
+                                </div>
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -507,25 +513,21 @@
                 new Chart(barchart, {
                     type: 'bar',
                     data: {
-                        labels: ['Hotdog', 'Ham', 'Bread', 'Fruits', 'Meat'],
+                        labels: ['Snacks', 'Biscuits', 'Frozen Food'],
                         datasets: [{
                             label: 'Products',
-                            data: [100, 50, 80, 30, 120, 70], // Static values here
+                            data: [{{ $countSnacksCategory}},
+                                    {{$countBiscuitsCategory}},
+                                    {{$countFrozenCategory}}],
                             backgroundColor: [
-                                'rgb(255, 99, 132)',
-                                // 'rgb(173, 216, 230)',
-                                // 'rgb(255, 159, 64)',
-                                // 'rgb(255, 182, 193)',
-                                // 'rgb(255, 205, 86)',
-                                // 'rgb(255, 222, 173)'
+                                '#059BFF',
+                                '#FF4069',
+                                '#FF9020',
                             ],
                             borderColor: [
                                 'rgb(255, 99, 132)',
-                                // 'rgb(173, 216, 230)',
-                                // 'rgb(255, 159, 64)',
-                                // 'rgb(255, 182, 193)',
-                                // 'rgb(255, 205, 86)',
-                                // 'rgb(255, 222, 173)'
+                                'rgb(173, 216, 230)',
+                                'rgb(255, 159, 64)',
                             ],
                             borderWidth: 1
                         }]
@@ -552,44 +554,49 @@
         </div>
     </div>
     <div class="flex items-center flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg">
+        <h2 class="text-xl font-semibold mt-4 text-center">Total Users</h2>
         <div class="w-[60%] px-6 py-5 font-semibold border-b border-gray-100">
-            <canvas id="myChart"></canvas>
+            <div>
+                <canvas class="flex justify-center items-center" id="myChart"></canvas>
+            </div>
 
-            <script>
-                const ctx = document.getElementById('myChart');
+<script>
+    const ctx = document.getElementById('myChart');
 
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Admin', 'Consumer'],
-                        datasets: [{
-                            label: 'Number of Users',
-                            data: [50, 30, 70], // Static values here
-                            backgroundColor: [
-                                '#059BFF',
-                                '#FF4069',
-                                // '#FF9020',
-                            ],
-                            borderWidth: 1
-                        }]
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Admin', 'Consumer'],
+            datasets: [{
+                label: 'Total Users',
+                data: [
+                    {{ $countAdmins }},
+                    {{ $countConsumer }},
+                ],
+                backgroundColor: [
+                    '#059BFF',
+                    '#FF4069',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    align: 'center', // Optional: Align the legend items to the center
+                    labels: {
+                        boxWidth: 15, // Optional: Adjust the box width of legend items
+                        padding: 10, // Optional: Add padding between legend items
+                        usePointStyle: true, // Optional: Use point style for legend items
                     },
-                    options: {
-                        plugins: {
-                            legend: {
-                                display: true,
-                                position: 'bottom',
-                                align: 'center',
-                                labels: {
-                                    boxWidth: 15,
-                                    padding: 10,
-                                    usePointStyle: true,
-                                },
-                                maxItems: 3
-                            }
-                        }
-                    }
-                });
-            </script>
+                    maxItems: 3 // Set the maximum number of items to fit in one line
+                }
+            }
+        }
+    });
+</script>
         </div>
     </div>
 </section>
