@@ -94,6 +94,40 @@
           </nav>
         </div>
 
+        <!-- Logout Modal -->
+        <div id="logoutModal" class="hidden fixed inset-0 overflow-y-auto flex items-center justify-center z-30">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <div class="bg-white rounded-lg overflow-hidden transform transition-all flex justify-end p-2">
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-col">
+                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                    <h3 class="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to logout?</h3>
+                    <div class="flex justify-end items-end">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a :href="route('logout')"
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();"
+                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-3 py-3 text-center">
+                                <i class="ri-logout-box-line mr-1 text-lg"></i>
+                                <span class="text-sm">Logout</span>
+                            </a>
+                        </form>
+                        <div class="absolute mr-[100px] -mb-2.5">
+                            <button onclick="document.getElementById('logoutModal').classList.add('hidden')"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-3 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <!-- content -->
  <div class="flex-grow text-gray-800">
     <main class="p-3 sm:p-4 space-y-5">
@@ -118,7 +152,7 @@
                                 <th data-priority="2">Product Code</th>
                                 <th data-priority="3">Product Name</th>
                                 <th data-priority="4">Categories</th>
-                                <th data-priority="5">Quantity</th>
+                                {{-- <th data-priority="5">Quantity</th> --}}
                                 <th data-priority="6">Expiration Date</th>
                                 <th data-priority="7">Status</th>
                                 <th data-priority="8">Edit</th>
@@ -140,7 +174,7 @@
                                 {{-- <td >{{ $products->product_code }}</td> --}}
                                 <td >{{ $products->product_name }}</td>
                                 <td >{{ $products->categories }}</td>
-                                <td >{{ $products->quantity }}</td>
+                                {{-- <td >{{ $products->quantity }}</td> --}}
                                 <td >{{ $products->expiration_date }}</td>
                                 <td >{{ $products->status }}</td>
                                 <td class="text-center ">
@@ -179,7 +213,7 @@
                         x-transition:leave-end="opacity-0 transform scale-95"
                         class="bg-white rounded-lg overflow-hidden transform transition-all flex justify-start">
                         <!-- ... (modal content) ... -->
-                        <div class="bg-white py-3 w-full sm:w-[340px] h-full sm:h-[480px]">
+                        <div class="bg-white py-3 w-full sm:w-[340px] h-full sm:h-[420px]">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white w-full pb-3 ml-5">
                                     Add New Products
@@ -199,8 +233,8 @@
                                         <option value="biscuits">Biscuits</option>
                                     </select>
 
-                                <label for="quantity" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity</label>
-                                <input type="number" name="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
+                                {{-- <label for="quantity" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity</label>
+                                <input type="number" name="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required> --}}
 
                                 <label for="expiration_date" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Expiration Date:</label>
                                 <input type="date" name="expiration_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]" required>
@@ -208,7 +242,7 @@
                                 <label for="status" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Status:</label>
                                 <select name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white w-[300px] mb-2" required>
                                     <option value="">Select Status</option>
-                                    <option value="available">Available</option>
+                                    <option value="available" selected>Available</option>
                                     <option value="consumed">Consumed</option>
                                     <option value="expired">Expired</option>
                                 </select>
@@ -293,7 +327,7 @@
                 x-transition:leave-end="opacity-0 transform scale-95"
                 class="rounded-lg overflow-hidden transform transition-all flex justify-start">
                 <!-- ... (modal content) ... -->
-                <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[570px]">
+                <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[500px]">
                     <div class="flex items-center justify-between">
                         <h3
                             class="text-xl font-semibold text-gray-900 dark:text-white w-full pt-2 pb-3 ml-5">
@@ -346,13 +380,13 @@
                                     </select>
 
 
-                                <label for="quantity"
+                                {{-- <label for="quantity"
                                     class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity
                                 </label>
                                 <input type="number" name="quantity"
                                     value="{{ $products->quantity }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]"
-                                    required>
+                                    required> --}}
 
                                     <label for="status"
                                                     class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Expiration Date

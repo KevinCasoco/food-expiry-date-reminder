@@ -326,7 +326,7 @@
                 x-transition:leave-end="opacity-0 transform scale-95"
                 class="rounded-lg overflow-hidden transform transition-all flex justify-start">
                 <!-- ... (modal content) ... -->
-                <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[570px]">
+                <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[500px]">
                     <div class="flex items-center justify-between">
                         <h3
                             class="text-xl font-semibold text-gray-900 dark:text-white w-full pt-2 pb-3 ml-5">
@@ -379,13 +379,13 @@
                                     </select>
 
 
-                                <label for="quantity"
+                                {{-- <label for="quantity"
                                     class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Quantity
                                 </label>
                                 <input type="number" name="quantity"
                                     value="{{ $products->quantity }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mb-2 w-full sm:w-[300px]"
-                                    required>
+                                    required> --}}
 
                                     <label for="status"
                                                     class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Expiration Date
