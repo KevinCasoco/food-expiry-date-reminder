@@ -248,7 +248,7 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'nullable|string',
             'categories' => 'nullable|string',
-            'quantity' => 'nullable|string',
+            // 'quantity' => 'nullable|string',
             'expiration_date' => 'nullable|string',
             'status' => 'nullable|string',
         ]);
@@ -257,7 +257,7 @@ class ProductController extends Controller
         $data->update([
             'product_name' => $request->input('product_name'),
             'categories' => $request->input('categories'),
-            'quantity' => $request->input('quantity'),
+            // 'quantity' => $request->input('quantity'),
             'expiration_date' => $request->input('expiration_date'),
             'status' => $request->input('status'),
         ]);
@@ -278,7 +278,7 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'nullable|string',
             'categories' => 'nullable|string',
-            'quantity' => 'nullable|string',
+            // 'quantity' => 'nullable|string',
             'expiration_date' => 'nullable|string',
             'status' => 'nullable|string',
         ]);
@@ -287,7 +287,7 @@ class ProductController extends Controller
         $data->update([
             'product_name' => $request->input('product_name'),
             'categories' => $request->input('categories'),
-            'quantity' => $request->input('quantity'),
+            // 'quantity' => $request->input('quantity'),
             'expiration_date' => $request->input('expiration_date'),
             'status' => $request->input('status'),
         ]);

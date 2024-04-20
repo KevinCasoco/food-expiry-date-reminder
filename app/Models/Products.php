@@ -16,7 +16,7 @@ class Products extends Model
         'expiration_date',
         'date_consumed',
         'status',
-        'quantity',
+        // 'quantity',
         'qr_code_image',
     ];
 
