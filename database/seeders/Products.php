@@ -14,14 +14,13 @@ class Products extends Seeder
     public function run(): void
     {
         // seeding products
-        //  $products = ModelsProducts::create([
-        //     'product_name' => 'hotdog',
-        //     'categories' => 'frozen food',
-        //     'quantity' => '5',
-        //     'expiration_date' => '2024-02-02 12:42:50',
-        //     'date_consumed' => '2024-02-04 12:42:50',
-        //     'status' => 'expired'
+         $products = ModelsProducts::create([
+            'product_code' => '3038554906',
+            'product_name' => 'Piatos',
+            'categories' => 'snacks',
+            'expiration_date' => '2024-04-20 12:42:50',
+            'status' => 'available'
 
-        // ]);
+        ]);
     }
 }
