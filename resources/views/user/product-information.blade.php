@@ -136,7 +136,7 @@
                 <h2 class="text-2xl font-bold">LIST OF PRODUCTS</h2>
             </div>
 
-            <div x-data="{ adminDelete: false, adminEdit: false, adminNewUsers: false, itemToDelete: null, itemToEdit: null}">
+            <div x-data="{ adminDelete: false, adminView: false, adminEdit: false, adminNewUsers: false, itemToDelete: null, itemToEdit: null, itemToView: null}">
                 <div class="flex flex-col mb-2 sm:justify-end md:flex-row md:justify-end items-center lg:justify-end">
                 <button @click="adminNewUsers = true" class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm  px-14 py-2.5 md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 mb-2 md:mb-0"><i class="ri-add-circle-line mr-1"></i>Add New Products</button>
                 <div class="md:flex-shrink-0 mt-[47px]">
@@ -148,7 +148,7 @@
                         <thead>
                             <tr>
                                 <th data-priority="1">ID</th>
-                                <th data-priority="2">Product Code</th>
+                                {{-- <th data-priority="2">Product Code</th> --}}
                                 <th data-priority="3">Product Name</th>
                                 <th data-priority="4">Categories</th>
                                 {{-- <th data-priority="5">Quantity</th> --}}
@@ -156,6 +156,7 @@
                                 <th data-priority="7">Status</th>
                                 <th data-priority="8">Edit</th>
                                 <th data-priority="9">Delete</th>
+                                <th data-priority="10">View</th>
                                 {{-- <th data-priority="6">QR CODE</th> --}}
                             </tr>
                         </thead>
@@ -166,10 +167,10 @@
                             <tr>
                                 <td >{{ $products->id }}</td>
                                 {{-- bar code with id --}}
-                                <td class="h-16">
+                                {{-- <td class="h-16">
                                     {!! DNS1D::getBarcodeHTML("$products->product_code", 'C128', 2, 60) !!} 
                                     <p>p - {{ $products->product_code }}</p>
-                                </td>                                                                
+                                </td>                                                                 --}}
                                 {{-- qr code --}}
                                 {{-- <td>{!!DNS2D::getBarcodeHTML("$products->product_code", 'QRCODE')!!}</td> --}}
                                 {{-- <td >{{ $products->product_code }}</td> --}}
@@ -192,6 +193,14 @@
                                         data-item-id="{{ $products->id }}"
                                         class="py-1 px-4 rounded bg-red-500 hover:bg-red-700 text-white">
                                         <i class="ri-delete-bin-5-fill mr-1"></i>Delete
+                                    </button>
+                                </td>
+                                <td class="text-center ">
+                                    <button
+                                        @click="adminView = true; itemToView = $event.target.getAttribute('data-item-id')"
+                                        data-item-id="{{ $products->id }}"
+                                        class="py-1 px-4 rounded bg-[#4ECE5D] hover:bg-[#4ECE5D] text-white">
+                                        <i class="ri-edit-box-fill mr-1"></i>View
                                     </button>
                                 </td>
                             </tr>
@@ -264,6 +273,80 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- View Modal -->
+                <div x-show="adminView"
+                class="fixed inset-0 overflow-y-auto flex items-center justify-center z-30" x-cloak>
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+
+                <div x-show="adminView" @click.away="adminView = false"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform scale-95"
+                    x-transition:enter-end="opacity-100 transform scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 transform scale-100"
+                    x-transition:leave-end="opacity-0 transform scale-95"
+                    class="bg-white rounded-lg overflow-hidden transform transition-all flex justify-start">
+                    <!-- ... (modal content) ... -->
+                    <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[230px]">
+                        <div class="flex items-center justify-between">
+                            <h3
+                                class="text-xl font-semibold text-gray-900 dark:text-white w-full pt-2 pb-3 ml-5">
+                                Product Information
+                            </h3>
+                            <button @click="adminView = false" aria-label="Close"
+                                class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
+                                <svg class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <hr class="bg-black border-gray-300 w-full">
+                        @foreach ($data as $products)
+                            <div x-show="itemToView.toString() === '{{ $products->id }}'">
+                                <form method="post"
+                                    :action="`{{ route('user.product-information.update_products', '') }}/${itemToEdit}`"
+                                    class="pl-5 pr-5 pt-2 pb-1">
+                                    @csrf
+                                    @method('patch')
+                                
+                                    {{-- <label for="barcode_id"
+                                        class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Barcode ID:</label>
+                                    <input type="number" name="id" value="{{ $products->product_code }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mb-2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white  w-full sm:w-[300px]"
+                                        disabled> --}}
+
+                                        <div class="flex flex-col items-center">
+                                        <label for="barcode_id"
+                                        class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Barcode ID:</label>
+                                            <div class="h-16">
+                                        {!! DNS1D::getBarcodeHTML("$products->product_code", 'C128', 2, 60) !!} 
+                                        <p>p - {{ $products->product_code }}</p>
+                                            </div> 
+                                        </div>
+    
+                                    <div class="md:hidden">
+                                        <button type="submit"
+                                            class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center" disabled>
+                                            Update
+                                        </button>
+                                        <div class="md:hidden absolute mr-[93px]">
+                                            <button @click.prevent="adminView = false"
+                                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
 
                 <!-- Delete Modal -->
                 <div x-show="adminDelete"
@@ -515,6 +598,7 @@
         function deleteItem(itemId) {
             // Set the itemToDelete value based on the clicked item's ID
             this.itemToDelete = itemId;
+            this.itemToView = itemId;
         }
     </script>
 
