@@ -308,7 +308,11 @@ class ProductController extends Controller
 
     public function getEvents()
     {
-        $products = Products::all();
+        // display all products to calendar
+        // $products = Products::all();
+
+        // display the filtered products which is available
+        $products = Products::where('status', 'available')->get();
 
         $events = [];
 
