@@ -157,7 +157,7 @@
                                 <th data-priority="8">Edit</th>
                                 <th data-priority="9">Delete</th>
                                 <th data-priority="10">View</th>
-                                {{-- <th data-priority="6">QR CODE</th> --}}
+                                <th data-priority="11">Download</th>
                             </tr>
                         </thead>
 
@@ -168,7 +168,7 @@
                                 <td >{{ $products->id }}</td>
                                 {{-- bar code with id --}}
                                 {{-- <td class="h-16">
-                                    {!! DNS1D::getBarcodeHTML("$products->product_code", 'C128', 2, 60) !!} 
+                                    {!! DNS1D::getBarcodeHTML("$products->product_code", 'C128', 2, 60) !!}
                                     <p>p - {{ $products->product_code }}</p>
                                 </td>                                                                 --}}
                                 {{-- qr code --}}
@@ -201,6 +201,14 @@
                                         data-item-id="{{ $products->id }}"
                                         class="py-1 px-4 rounded bg-[#4ECE5D] hover:bg-[#4ECE5D] text-white">
                                         <i class="ri-edit-box-fill mr-1"></i>View
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button
+                                        onclick="generateAndDownloadBarcode()"
+                                        data-item-id="{{ $products->id }}"
+                                        class="py-1 px-4 rounded bg-[#4ECE5D] hover:bg-[#4ECE5D] text-white">
+                                        <i class="ri-edit-box-fill mr-1"></i> PNG
                                     </button>
                                 </td>
                             </tr>
@@ -313,7 +321,7 @@
                                     class="pl-5 pr-5 pt-2 pb-1">
                                     @csrf
                                     @method('patch')
-                                
+
                                     {{-- <label for="barcode_id"
                                         class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Barcode ID:</label>
                                     <input type="number" name="id" value="{{ $products->product_code }}"
@@ -324,11 +332,18 @@
                                         <label for="barcode_id"
                                         class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Barcode ID:</label>
                                             <div class="h-16">
-                                        {!! DNS1D::getBarcodeHTML("$products->product_code", 'C128', 2, 60) !!} 
+                                        {!! DNS1D::getBarcodeHTML("$products->product_code", 'C128', 2, 60) !!}
                                         <p>p - {{ $products->product_code }}</p>
-                                            </div> 
+                                            </div>
+                                        <br>
+                                        {{-- Download button --}}
+                                        <a href="{{ route('user.product-information.downloadBarcode', $products->product_code) }}"
+                                            class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+                                            download>
+                                            Download Barcode
+                                        </a>
                                         </div>
-    
+
                                     <div class="md:hidden">
                                         <button type="submit"
                                             class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center" disabled>
@@ -609,6 +624,59 @@
                 itemToEdit: null, // Variable to store the selected item
             }));
         });
+    </script>
+
+    {{-- <script>
+            function generateAndDownloadPng() {
+        // Send a request to the server to generate the PNG image
+        fetch('/generate-png', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ productId: '{{ $products->id }}' }) // Send any data needed to generate the PNG image
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            // Create a temporary anchor element to trigger the download
+            var a = document.createElement('a');
+            var url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = 'image.png'; // Set the filename for the downloaded image
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        })
+        .catch(error => {
+            console.error('Error generating PNG image:', error);
+        });
+    }
+    </script> --}}
+
+    <script>
+        function generateAndDownloadBarcode() {
+            var productCode = "{{ $products->product_code }}"; // Get product code
+            var barcodeHtml = `{!! DNS1D::getBarcodeHTML("$products->product_code", 'C128', 2, 60) !!}`; // Generate barcode HTML
+
+            // Create a temporary div element to hold the barcode HTML
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = barcodeHtml;
+
+            // Convert barcode SVG to base64 encoded PNG image
+            var barcodeSvg = tempDiv.firstChild;
+            var svgString = new XMLSerializer().serializeToString(barcodeSvg);
+            var image = new Image();
+            image.src = 'data:image/svg+xml;base64,' + btoa(svgString);
+
+            // Create a temporary anchor element to trigger the download
+            var a = document.createElement('a');
+            a.href = image.src;
+            a.download = 'barcode.png'; // Set the filename for the downloaded image
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
     </script>
     @endif
 </x-app-layout>

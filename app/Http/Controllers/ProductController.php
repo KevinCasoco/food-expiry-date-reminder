@@ -179,6 +179,23 @@ class ProductController extends Controller
         return view('user.calendar', ['events' => json_encode($events)]); // Convert events array to JSON
     }
 
+    public function downloadBarcode($product_code)
+    {
+        // Generate barcode image
+        $barcode = DNS1D::getBarcodeSVG($product_code, 'C128');
+
+        // Set headers for file download
+        $headers = [
+            'Content-Type' => 'image/svg+xml', // Set content type to SVG
+            'Content-Disposition' => 'attachment; filename="barcode.svg"',
+        ];
+
+        // Return response with barcode image and headers for download
+        return response()->stream(function () use ($barcode) {
+            echo $barcode;
+        }, 200, $headers);
+    }
+
     public function create_products(Request $request)
     {
         $number = mt_rand(1000000000,9999999999);
