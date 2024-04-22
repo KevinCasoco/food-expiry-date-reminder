@@ -157,7 +157,6 @@
                                 <th data-priority="8">Edit</th>
                                 <th data-priority="9">Delete</th>
                                 <th data-priority="10">View</th>
-                                <th data-priority="11">Download</th>
                             </tr>
                         </thead>
 
@@ -201,14 +200,6 @@
                                         data-item-id="{{ $products->id }}"
                                         class="py-1 px-4 rounded bg-[#4ECE5D] hover:bg-[#4ECE5D] text-white">
                                         <i class="ri-edit-box-fill mr-1"></i>View
-                                    </button>
-                                </td>
-                                <td class="text-center">
-                                    <button
-                                        onclick="generateAndDownloadBarcode()"
-                                        data-item-id="{{ $products->id }}"
-                                        class="py-1 px-4 rounded bg-[#4ECE5D] hover:bg-[#4ECE5D] text-white">
-                                        <i class="ri-edit-box-fill mr-1"></i> PNG
                                     </button>
                                 </td>
                             </tr>
