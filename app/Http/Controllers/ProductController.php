@@ -181,8 +181,11 @@ class ProductController extends Controller
 
     public function downloadBarcode($product_code)
     {
-        // Generate barcode image
-        $barcode = DNS1D::getBarcodeSVG($product_code, 'C128');
+        // Adjusting the height of the barcode
+        $barcodeHeight = 80; // Set your desired height here
+
+        // Generate barcode image with custom height
+        $barcode = DNS1D::getBarcodeSVG($product_code, 'C128', 2, $barcodeHeight, '#000', true);
 
         // Set headers for file download
         $headers = [
