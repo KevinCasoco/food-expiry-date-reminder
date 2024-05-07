@@ -195,8 +195,7 @@
                                     </button>
                                 </td>
                                 <td class="text-center ">
-                                    <button
-                                        @click="adminView = true; itemToView = $event.target.getAttribute('data-item-id')"
+                                    <button @click="adminView = true; itemToView = $event.target.getAttribute('data-item-id')"
                                         data-item-id="{{ $products->id }}"
                                         class="py-1 px-4 rounded bg-[#4ECE5D] hover:bg-[#4ECE5D] text-white">
                                         <i class="ri-edit-box-fill mr-1"></i>View
@@ -288,44 +287,34 @@
                     x-transition:leave-start="opacity-100 transform scale-100"
                     x-transition:leave-end="opacity-0 transform scale-95"
                     class="bg-white rounded-lg overflow-hidden transform transition-all flex justify-start">
-                    <!-- ... (modal content) ... -->
                     <div class="bg-white py-3 w-full sm:w-[345px] h-full sm:h-[230px]">
                         <div class="flex items-center justify-between">
-                            <h3
-                                class="text-xl font-semibold text-gray-900 dark:text-white w-full pt-2 pb-3 ml-5">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white w-full pt-2 pb-3 ml-5">
                                 Product Information
                             </h3>
                             <button @click="adminView = false" aria-label="Close"
                                 class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                                <svg class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
+                                <svg class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
                         <hr class="bg-black border-gray-300 w-full">
                         @foreach ($data as $products)
-                            <div x-show="itemToView.toString() === '{{ $products->id }}'">
+                            <div x-show="itemToView === '{{ $products->id }}'">
                                 <form method="post"
-                                    :action="`{{ route('user.product-information.update_products', '') }}/${itemToEdit}`"
+                                    :action="`{{ route('user.product-information.update_products', '') }}/${itemToView}`"
                                     class="pl-5 pr-5 pt-2 pb-1">
                                     @csrf
                                     @method('patch')
 
-                                    {{-- <label for="barcode_id"
-                                        class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Barcode ID:</label>
-                                    <input type="number" name="id" value="{{ $products->product_code }}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mb-2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white  w-full sm:w-[300px]"
-                                        disabled> --}}
-
-                                        <div class="flex flex-col items-center">
+                                    <div class="flex flex-col items-center">
                                         <label for="barcode_id"
-                                        class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Barcode ID:</label>
-                                            <div class="h-16">
-                                        {!! DNS1D::getBarcodeHTML("$products->product_code", 'C128', 2, 60) !!}
-                                        <p>p - {{ $products->product_code }}</p>
-                                            </div>
+                                            class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Barcode ID:</label>
+                                        <div class="h-16">
+                                            {!! DNS1D::getBarcodeHTML("$products->product_code", 'C128', 2, 60) !!}
+                                            <p>p - {{ $products->product_code }}</p>
+                                        </div>
                                         <br>
                                         {{-- Download button --}}
                                         <a href="{{ route('user.product-information.downloadBarcode', $products->product_code) }}"
@@ -333,11 +322,12 @@
                                             download>
                                             Download Barcode
                                         </a>
-                                        </div>
+                                    </div>
 
                                     <div class="md:hidden">
                                         <button type="submit"
-                                            class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center" disabled>
+                                            class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+                                            disabled>
                                             Update
                                         </button>
                                         <div class="md:hidden absolute mr-[93px]">
@@ -352,7 +342,7 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+                </div>
 
                 <!-- Delete Modal -->
                 <div x-show="adminDelete"
@@ -616,34 +606,6 @@
             }));
         });
     </script>
-
-    {{-- <script>
-            function generateAndDownloadPng() {
-        // Send a request to the server to generate the PNG image
-        fetch('/generate-png', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ productId: '{{ $products->id }}' }) // Send any data needed to generate the PNG image
-        })
-        .then(response => response.blob())
-        .then(blob => {
-            // Create a temporary anchor element to trigger the download
-            var a = document.createElement('a');
-            var url = window.URL.createObjectURL(blob);
-            a.href = url;
-            a.download = 'image.png'; // Set the filename for the downloaded image
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-        })
-        .catch(error => {
-            console.error('Error generating PNG image:', error);
-        });
-    }
-    </script> --}}
 
     <script>
         function generateAndDownloadBarcode() {
