@@ -164,7 +164,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/consumed-products', [ProductController::class, 'consumed_products'])->name('user.consumed-products');
 
     // expired products
-    Route::get('/expired-products', [ProductController::class, 'expired_products'])->name('user.expired-products');
+    Route::get('/expired-products', [ProductController::class, 'expired_products'])->name('user.expired-product-information');
 
     Route::get('download-barcode/{product_code}',  [ProductController::class, 'downloadBarcode'])->name('user.product-information.downloadBarcode');
 

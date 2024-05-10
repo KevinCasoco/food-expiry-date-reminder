@@ -42,7 +42,9 @@ class ProductController extends Controller
     {
         // $data = Products::all();
 
-        $data = Products::paginate(10); // Paginate with 10 items per page
+        $data = Products::where('status', 'available')
+                ->orWhere('status', 'consumed')
+                ->paginate(10);
 
         $categories = Products::distinct('categories')->pluck('categories');
 
@@ -83,9 +85,12 @@ class ProductController extends Controller
 
     public function expired_products()
     {
-        $data = Products::paginate(10); // Paginate with 10 items per page
+        $data = Products::where('status', 'expired')
+                ->paginate(10);
 
-        return view('user.expired-products', compact('data'));
+        $categories = Products::distinct('categories')->pluck('categories');
+
+        return view('user.expired-product-information', compact('data', 'categories'));
     }
 
     public function admin_expired_products()
