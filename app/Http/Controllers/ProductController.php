@@ -44,7 +44,9 @@ class ProductController extends Controller
 
         $data = Products::paginate(10); // Paginate with 10 items per page
 
-        return view('user.product-information', compact('data'));
+        $categories = Products::distinct('categories')->pluck('categories');
+
+        return view('user.product-information', compact('data', 'categories'));
     }
 
     public function admin_product_list()
