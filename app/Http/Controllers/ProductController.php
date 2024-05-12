@@ -42,9 +42,13 @@ class ProductController extends Controller
     {
         // $data = Products::all();
 
-        $data = Products::paginate(10); // Paginate with 10 items per page
+        $data = Products::where('status', 'available')
+                ->orWhere('status', 'consumed')
+                ->paginate(10);
 
-        return view('user.product-information', compact('data'));
+        $categories = Products::distinct('categories')->pluck('categories');
+
+        return view('user.product-information', compact('data', 'categories'));
     }
 
     public function admin_product_list()
@@ -81,9 +85,12 @@ class ProductController extends Controller
 
     public function expired_products()
     {
-        $data = Products::paginate(10); // Paginate with 10 items per page
+        $data = Products::where('status', 'expired')
+                ->paginate(10);
 
-        return view('user.expired-products', compact('data'));
+        $categories = Products::distinct('categories')->pluck('categories');
+
+        return view('user.expired-product-information', compact('data', 'categories'));
     }
 
     public function admin_expired_products()
@@ -177,6 +184,26 @@ class ProductController extends Controller
         }
 
         return view('user.calendar', ['events' => json_encode($events)]); // Convert events array to JSON
+    }
+
+    public function downloadBarcode($product_code)
+    {
+        // Adjusting the height of the barcode
+        $barcodeHeight = 80; // Set your desired height here
+
+        // Generate barcode image with custom height
+        $barcode = DNS1D::getBarcodeSVG($product_code, 'C128', 2, $barcodeHeight, '#000', true);
+
+        // Set headers for file download
+        $headers = [
+            'Content-Type' => 'image/svg+xml', // Set content type to SVG
+            'Content-Disposition' => 'attachment; filename="barcode.svg"',
+        ];
+
+        // Return response with barcode image and headers for download
+        return response()->stream(function () use ($barcode) {
+            echo $barcode;
+        }, 200, $headers);
     }
 
     public function create_products(Request $request)

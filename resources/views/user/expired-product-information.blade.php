@@ -54,7 +54,7 @@
                             <span class="text-sm">QR Code Scanner</span>
                         </a>
                     </li> --}}
-                    <li class="mb-1 group active">
+                    <li class="mb-1 group">
                         <a href="{{ route('user.product-information') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-shopping-cart-fill mr-3 text-lg"></i>
@@ -68,7 +68,7 @@
                             <span class="text-sm">Consumed Products</span>
                         </a>
                     </li> --}}
-                    <li class="mb-1 group">
+                    <li class="mb-1 group active">
                         <a href="{{ route('user.expired-product-information') }}"
                             class="flex items-center py-2 px-4 text-black hover:bg-[#4ECE5D] hover:text-gray-100 rounded-md group-[.active]:bg-[#4ECE5D] group-[.active]:text-white group-[.selected]:bg-[#4ECE5D] group-[.selected]:text-white transition duration-200">
                             <i class="ri-pass-expired-fill mr-3 text-lg"></i>
@@ -133,7 +133,7 @@
       <!-- Start Table -->
 <div id='recipients' class="p-4 m-1 lg:mt-0 rounded shadow-lg bg-white overflow-x-auto">
     <div class="mb-4 flex sm:justify-center md:justify-start lg:justify-start">
-                <h2 class="text-2xl font-bold">LIST OF PRODUCTS</h2>
+                <h2 class="text-2xl font-bold">EXPIRED PRODUCTS</h2>
             </div>
 
             <div x-data="{ adminDelete: false, adminView: false, adminEdit: false, adminNewUsers: false, itemToDelete: null, itemToEdit: null, itemToView: null}">
@@ -147,7 +147,7 @@
                                 <option value="{{ $category }}">{{ $category }}</option>
                             @endforeach
                         </select>
-                <button @click="adminNewUsers = true" class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm  px-14 py-2.5 md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 mb-2 md:mb-0"><i class="ri-add-circle-line mr-1"></i>Add New Products</button>
+                {{-- <button @click="adminNewUsers = true" class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm  px-14 py-2.5 md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 mb-2 md:mb-0"><i class="ri-add-circle-line mr-1"></i>Add New Products</button> --}}
                 <div class="md:flex-shrink-0 mt-[47px]">
 
                 </div>
@@ -163,7 +163,7 @@
                                 {{-- <th data-priority="5">Quantity</th> --}}
                                 <th data-priority="6">Expiration Date</th>
                                 <th data-priority="7">Status</th>
-                                <th data-priority="8">Edit</th>
+                                {{-- <th data-priority="8">Edit</th> --}}
                                 <th data-priority="9">Delete</th>
                                 <th data-priority="10">View</th>
                             </tr>
@@ -187,14 +187,14 @@
                                 {{-- <td >{{ $products->quantity }}</td> --}}
                                 <td >{{ $products->expiration_date }}</td>
                                 <td >{{ $products->status }}</td>
-                                <td class="text-center ">
+                                {{-- <td class="text-center ">
                                     <button
                                         @click="adminEdit = true; itemToEdit = $event.target.getAttribute('data-item-id')"
                                         data-item-id="{{ $products->id }}"
                                         class="py-1 px-4 rounded bg-sky-500 hover:bg-sky-700 text-white">
                                         <i class="ri-edit-box-fill mr-1"></i>Edit
                                     </button>
-                                </td>
+                                </td> --}}
                                 <td class="text-center ">
                                     <button
                                         @click="adminDelete = true; itemToDelete = $event.target.getAttribute('data-item-id')"
