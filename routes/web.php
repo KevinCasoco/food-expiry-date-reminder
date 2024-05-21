@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrCodeScannerController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -177,5 +178,10 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/events/search', [ProductController::class, 'search'])->name('user.calendar.search');
 
 }); // end of middleware group
+
+// check out and payment session
+Route::get('/checkout', [StripeController::class, 'checkout'])->name('checkout');
+Route::post('/session', [StripeController::class, 'session'])->name('session');
+Route::get('/success', [StripeController::class, 'success'])->name('success');
 
 require __DIR__.'/auth.php';
